@@ -7,6 +7,4 @@
 
 ## 论文给的测试数据结果
 
-<video width="320" height="240" controls>
-  <source src="GPS-Guassian\Results\论文里的测试数据\test_out.mp4" type="video/mp4">
-</video>
+<video controls src="test_out.mp4" title="test paper"></video>
