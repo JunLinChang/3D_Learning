@@ -1,0 +1,21 @@
+\begin{table}[!t]
+\footnotesize
+\setlength{\tabcolsep}{1.6mm}
+\centering
+\caption{The overall accuracy (\%) for classical fine-tuning strategies on three variants of ScanObjectNN~\cite{uy2019revisiting} is reported. `\#TP’ means the number of tunable parameters. Linear probing indicates head-tuned only.}
+\vspace{-10pt}
+\label{tab:origin_finetuning}
+\begin{tabular}{ lcccc }
+\toprule
+Tuning Strategy & \#TP(M) &OBJ\_BG &OBJ\_ONLY & PB\_T50\_RS \\
+\midrule
+Point-MAE~\cite{pang2022masked} & 22.1 & 90.02 & 88.29 & 85.18 \\
+Linear probing & 0.3  & 87.26\dtplus{-2.76} & 84.85\dtplus{-3.44} & 75.99\dtplus{-9.19}\\
+\midrule
++ Adapter~\cite{houlsby2019parameter} & 0.9  & 89.50\dtplus{-0.52} & 88.64\dplus{+0.35} & 83.93\dtplus{-1.25}\\
++ VPT~\cite{jia2022visual} & 0.4  & 87.26\dtplus{-2.76} & 87.09\dtplus{-1.20} &81.09\dtplus{-4.09} \\
++ LST~\cite{sung2022lst} & 0.8  & 89.67\dtplus{-0.25} & 89.67\dplus{+1.38} &82.75\dtplus{-2.43} \\
+\bottomrule
+\vspace{-15pt}
+\end{tabular}
+\end{table}

@@ -1,0 +1,45 @@
+\begin{table}[t]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{1.1mm}
+  \caption{Part segmentation on the ShapeNetPart~\cite{chang2015shapenet}. The mIoU for all classes (Cls.) and for all instances (Inst.) are reported. \#TP represents the tunable parameters. \textcolor{red}{$^*$} denotes reproduced results.}
+    \vspace{-10pt}
+    \begin{tabular}{lcccc}
+    \toprule
+    Methods & Reference & \#TP (M)& Cls. mIoU (\%) & Inst. mIoU (\%) \\
+    \midrule
+    \multicolumn{5}{c}{\textit{Supervised Learning Only}} \\
+    \midrule
+    PointNet~\cite{qi2017pointnet}  & CVPR 17  &- & 80.39 & 83.7 \\
+    PointNet++~\cite{qi2017pointnet++}    & NeurIPS 17 &-  & 81.85 & 85.1 \\
+    DGCNN~\cite{wang2019dynamic}  & TOG 19 & - & 82.33 & 85.2 \\
+    APES~\cite{wu2023attention} & CVPR 23& - & 83.67 & 85.8\\
+    \midrule
+    \multicolumn{5}{c}{\textit{ Self-Supervised Representation Learning (Full fine-tuning)}} \\
+    \midrule
+    % Transformer \cite{} & & 27.09 & 83.42 & 85.1 \\
+    OcCo~\cite{wang2021unsupervised}  & ICCV 21 & 27.09 & 83.42 & 85.1 \\
+    MaskPoint~\cite{liu2022masked}  & ECCV 22 & - & 84.60 & 86.0 \\
+    Point-BERT~\cite{yu2022point}  & CVPR 22 & 27.09 & 84.11 & 85.6 \\
+    Point-MAE~\cite{pang2022masked}  & ECCV 22 & 27.06 & 84.19 & 86.1 \\ 
+    ACT~\cite{dong2022autoencoders}  & ICLR 23 &  27.06 & 84.66 & 86.1 \\
+    \midrule
+    \multicolumn{5}{c}{\textit{ Self-Supervised Representation Learning (Efficient fine-tuning)}} \\
+    \midrule
+    Point-BERT~\cite{yu2022point} (baseline) &  CVPR 22 & 27.09 & 84.11 & 85.6 \\ 
+    + IDPT\textcolor{red}{$^*$}~\cite{zha2023instance} & ICCV 23 & 5.69  & 83.50  & 85.3  \\
+    + DAPT~\cite{zhou2024dynamic} & CVPR 24 & 5.65  & 83.83 & 85.5 \\
+    % + PointGST~\cite{liang2024parameter} & Arxiv 24 & 5.58  & \textbf{83.87} & 85.7 \\
+    \rowcolor{linecolor!40}+ PLT (\textbf{ours})& - & \textbf{2.08}  & \textbf{83.85} & \textbf{86.0} \\
+    \midrule
+    Point-MAE~\cite{pang2022masked} (baseline) &  ECCV 22 & 27.06 & 84.19 & 86.1 \\ 
+    + IDPT~\cite{zha2023instance} & ICCV 23 & 5.69  & 83.79  & 85.7  \\
+    + DAPT~\cite{zhou2024dynamic} & CVPR 24 & 5.65  & 84.01 & 85.7 \\
+    % + PPT~\cite{zhang2024positional} & Arxiv 24 & 5.62  & \textbf{84.07} & 85.7 \\
+    % + PointGST~\cite{liang2024parameter} & Arxiv 24 & 5.59  & 83.98 & 85.8 \\
+    \rowcolor{linecolor!40}+ PLT (\textbf{ours})& - & \textbf{2.08}  & 83.90 & \textbf{85.9} \\
+    \bottomrule
+    \end{tabular}
+    % \vspace{-10pt}
+  \label{tab:segmentation}
+\end{table}

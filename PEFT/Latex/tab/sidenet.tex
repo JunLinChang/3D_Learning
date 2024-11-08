@@ -1,0 +1,20 @@
+\begin{table}[!t]
+\scriptsize
+\setlength{\tabcolsep}{7.8mm}
+\centering
+\caption{Comparison between HLN and PLT. The tunable parameters (\#TP) and the overall accuracy (\%) on the hardest variant of ScanObjectNN are reported. }
+\vspace{-10pt}
+\label{tab:sidenet}
+
+\begin{tabular}{ccc}
+\toprule
+Method & \#TP (M) & PB\_T50\_RS \\
+\midrule
+Point-MAE & 22.1 & 85.18 \\
+% Linear probing & 0.3 & 75.99 \\
+HLN & 0.2 & 80.74 \\
+\rowcolor{linecolor!40} PLT(Ours) & 0.6 & \textbf{85.46} \\
+\bottomrule
+\end{tabular}
+% \vspace{-15pt}
+\end{table}

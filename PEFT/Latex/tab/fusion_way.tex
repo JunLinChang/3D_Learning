@@ -1,0 +1,22 @@
+\begin{table}[!t]
+\scriptsize
+\setlength{\tabcolsep}{7.3mm}
+\centering
+\caption{Fusion way for local and global information in point clouds. The tunable parameters (\#TP) and the overall accuracy (\%) on the hardest variant of ScanObjectNN\cite{uy2019revisiting} are reported.}
+\vspace{-10pt}
+\label{tab:fusion_way}
+
+\begin{tabular}{ccc}
+\toprule
+Fusion Way & \#TP (M) & PB\_T50\_RS \\
+\midrule
+Add & 0.58 & 85.01 \\
+Concat & 0.62 & 84.63 \\
+Only Global & 0.56 & 84.52 \\
+Only Local & 0.56 & 82.86 \\
+LGA with Sigmoid & 0.59 & 84.59 \\
+\rowcolor{linecolor!40}LGA with Softmax & 0.60 & \textbf{85.46} \\
+\bottomrule
+\end{tabular}
+% \vspace{-10pt}
+\end{table}

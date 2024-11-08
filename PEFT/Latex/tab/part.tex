@@ -1,0 +1,24 @@
+\begin{table}[!t]
+\scriptsize
+\setlength{\tabcolsep}{4.5mm}
+\centering
+ % \footnotesize
+\caption{The effect of each component of our LST. The tunable parameters (\#TP) and the overall accuracy (\%) on the hardest variant of ScanObjectNN\cite{uy2019revisiting} are reported.}
+  \vspace{-10pt}
+\label{tab:part}
+
+\begin{tabular}{ ccccc }
+   \toprule
+ SSF & DP & HLN &  \#TP (M) & PB\_T50\_RS \\
+\midrule
+\multicolumn{3}{c}{Full fine-tuning}  &22.1 & 85.18 \\
+\multicolumn{3}{c}{Linear Probing}  &0.27 & 75.99 \\
+\midrule
+&\ding {52} &\ding {52}& 0.49 & 84.52 \\
+\ding {52}  & &\ding {52}& 0.60 &84.66 \\
+\ding {52}  & & & 0.37 & 83.34\\
+\rowcolor{linecolor!40}\ding {52}  &\ding {52} &\ding {52}  & 0.60 & \textbf{85.46} \\
+\bottomrule
+\end{tabular}
+% \vspace{-10pt}
+\end{table}

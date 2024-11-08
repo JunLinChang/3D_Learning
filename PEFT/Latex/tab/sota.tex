@@ -1,0 +1,64 @@
+\begin{table*}[ht]
+    \footnotesize
+    \setlength{\tabcolsep}{0.9mm}
+    \centering
+
+  \caption{
+Classification on three variants of the ScanObjectNN~\cite{uy2019revisiting} and the ModelNet40\cite{wu20153d}, including the number of trainable parameters and overall accuracy (OA). All methods utilize the default data argumentation as the baseline\cite{zhou2024dynamic}. \textcolor{red}{$^*$} denotes reproduced results. We report ScanObjectNN\cite{uy2019revisiting} results without voting. ModelNet40\cite{wu20153d} results are without and with voting, referred to (-/-).
+}
+  \vspace{-10pt}
+    \begin{tabular}{lcccccccc}
+    
+    \toprule
+    \multirow{2.3}{*}{Method} &\multirow{2.3}{*}{Reference} &\multirow{2.3}{*}{Tunable params. (M)} &\multirow{2.3}{*}{FLOPs (G)} &\multicolumn{3}{c}{ScanObjectNN} &\multicolumn{2}{c}{ModelNet40}\\
+		\cmidrule(r){5-7} \cmidrule{8-9}
+	& & & &OBJ\_BG & OBJ\_ONLY &PB\_T50\_RS & Points Num. & OA (\%)      \\
+    \midrule
+    \multicolumn{9}{c}{\textit{Supervised Learning Only}} \\
+    \midrule
+    PointNet~\cite{qi2017pointnet} & CVPR 17 & 3.5 & 0.5  & 73.3  & 79.2  & 68.0 & 1k & - / 89.2 \\
+    PointNet++~\cite{qi2017pointnet++}   & NeurIPS 17 & 1.5 & 1.7 & 82.3  & 84.3  & 77.9 & 1k & - / 90.7\\
+    DGCNN~\cite{wang2019dynamic}  & TOG 19 & 1.8 & 2.4 & 82.8  & 86.2  & 78.1 & 1k & - / 92.9 \\
+    MVTN~\cite{hamdi2021mvtn}  & ICCV 21 & 11.2 & 43.7 & -     & -     & 82.8 & 1k & - / 93.8\\
+    PointNeXt~\cite{qian2022pointnext} & NeurIPS 22  & 1.4 & 1.6 & -     & -  & 87.7 & 1k & - / 94.0\\
+    PointMLP~\cite{ma2022rethinking}  & ICLR 22 &  13.2 & 31.4  & -    & -     & 85.4  & 1k & - / 94.5\\
+    RepSurf-U~\cite{ran2022surface} & CVPR 22 & 1.5   & 0.8 &  -  & -    & 84.3  & 1k  & - / 94.4 \\
+    ADS~\cite{hong2023attention} & ICCV 23 & -  & -  &  - & -   & 87.5 & 1k  & - / 95.1 \\
+    \midrule
+    \multicolumn{9}{c}{\textit{ Self-Supervised Representation Learning (Full fine-tuning)}} \\
+    \midrule
+    % Transformer~\cite{} &  & 22.1 & & 79.86 & 80.55 &  77.24 & 1k & 91.4 \\
+    OcCo~\cite{wang2021unsupervised} & ICCV 21 & 22.1 & 4.8 & 84.85 & 85.54 & 78.79 & 1k & - / 92.1 \\
+    Point-BERT~\cite{yu2022point}  & CVPR 22 & 22.1 & 4.8  & 87.43 & 88.12 &  83.07 & 1k & - / 93.2 \\
+    MaskPoint~\cite{liu2022masked} & ECCV 22 & 22.1 & - & 89.70 & 89.30 &  84.60 & 1k & - / 93.8 \\
+    Point-MAE~\cite{pang2022masked}  & ECCV 22 & 22.1 & 4.8 & 90.02 & 88.29 & 85.18 & 1k & - / 93.8 \\
+    Point-M2AE~\cite{zhang2022point}  & NeurIPS 22 & 15.3 & 3.6 & 91.22 & 88.81 & 86.43 
+ & 1k & - / 94.0\\
+    ACT~\cite{dong2022autoencoders} & ICLR 23 & 22.1 & 4.8 & 93.29 & 91.91  & 88.21 & 1k & - / 93.7\\
+    \recon~\cite{qi2023contrast} & ICML 23& 43.6 & 5.3 & 94.15 & 93.12  & 89.73 & 1k & - / 93.9  \\
+    
+    \midrule
+    \multicolumn{9}{c}{\textit{Self-Supervised Representation Learning (Efficient fine-tuning)}} \\
+    
+    \midrule
+    Point-BERT~\cite{yu2022point} (baseline)  & CVPR 22 & 22.1 (100\%) & 4.8 & 87.43 & 88.12 & 83.07& 1k & {92.7} / {\color{gray}{93.2}}\\
+    + IDPT~\cite{zha2023instance}& ICCV 23 & 1.7 (7.69\%) & 7.2 & {88.12}\dplus{+0.69} & {88.30}\dplus{+0.18} & {83.69}\dplus{+0.62} &1k & {92.6}{\dtplus{-0.1}} / {\color{gray}{{93.4}}}{\color{gray}{\ddplus{+0.2}}} \\
+    + DAPT~\cite{zhou2024dynamic}& CVPR 24 & 1.1 (4.97\%) & 5.0 & {91.05}\dplus{+3.62} & {89.67}\dplus{+1.55} & {85.43}\dplus{+2.36} &1k & {93.1}{\dplus{+0.4}} / {\color{gray}{{93.6}}}{\color{gray}{\ddplus{+0.4}}} \\
+    + PointGST~\cite{liang2024parameter}& Arxiv 24 & \textbf{0.6} (\textbf{2.71}\%) & 5.0 & {91.39}\dplus{+3.96} & {89.67}\dplus{+1.55} & {85.64}\dplus{+2.57} &1k & {93.4}{\dplus{+0.7}} / {\color{gray}{{93.8}}}{\color{gray}{\ddplus{+0.6}}} \\
+    + LST~\cite{sung2022lst}& NeurIPS 22 & 0.8 (3.38\%) & - & {89.15}\dplus{+2.72} & {89.50}\dplus{+1.38} & {83.17}\dplus{+0.10} &1k & {92.9}{\dplus{+0.2}} / {\color{gray}{{93.3}}}{\color{gray}{\ddplus{+0.1}}} \\
+    \rowcolor{linecolor!40}+ PLT ({ours})& - & \textbf{0.6} (\textbf{2.71}\%) & 5.0 & {91.57}\dplus{+4.14} & {89.85}\dplus{+1.73} & {86.09}\dplus{+3.02} &1k & {93.5}{\dplus{+0.8}} / {\color{gray}{{94.2}}}{\color{gray}{\ddplus{+1.0}}} \\
+    \midrule
+    Point-MAE~\cite{pang2022masked} (baseline)& ECCV 22 & 22.1 (100\%)& 4.8& 90.02 & 88.29 & {85.18} & 1k & 93.2 / {\color{gray}{93.8}}\\
+    + IDPT~\cite{zha2023instance}& ICCV 23 & 1.7 (7.69\%) & 7.2 & {91.22}\dplus{+1.20} & {90.02}\dplus{+1.73} & {84.94}\dtplus{-0.24} &1k & {93.3}{\dplus{+0.1}} / {\color{gray}{{94.4}}}{\color{gray}{\ddplus{+0.6}}} \\
+    + Point-PEFT\textcolor{red}{$^*$}~\cite{tang2024point}& AAAI 24 & 0.7 (3.13\%) & - & {90.19}\dplus{+0.17} & {89.50}\dplus{+1.21} & {84.35}\dtplus{-0.83} &1k & {94.2}{\dplus{+0.4}} / ~~-~~~~~~~~~~~~\\
+   + DAPT~\cite{zhou2024dynamic}& CVPR 24 & 1.1 (4.97\%) & 5.0 & {90.88}\dplus{+0.86} & {90.19}\dplus{+1.90} & {85.08}\dtplus{-0.10} &1k & {93.5}{\dplus{+0.3}} / {\color{gray}{{94.0}}}{\color{gray}{\ddplus{+0.2}}} \\
+    + PPT\textcolor{red}{$^*$}~\cite{zhang2024positional}& Arxiv 24 & 1.1 (4.97\%) & 5.0 & {89.50}\dtplus{-0.52} & {89.50}\dplus{+1.21} & {84.91}\dtplus{-0.27} &1k & {93.7}{\dplus{+0.5}} / ~~-~~~~~~~~~~~ \\
+    + PointGST\cite{liang2024parameter}& Arxiv 24 & \textbf{0.6} (\textbf{2.71}\%) & 5.0 & {91.74}\dplus{+1.72} & {90.19}\dplus{+1.90} & {85.29}\dplus{+0.11} &1k & {93.5}{\dplus{+0.3}} / {\color{gray}{{94.0}}}{\color{gray}{\ddplus{+0.2}}} \\
+    + LST~\cite{sung2022lst}& NeurIPS 22 & 0.8 (3.38\%) & 5.0 & {89.67}\dtplus{-0.25} & {89.67}\dplus{+1.38} & {82.75}\dtplus{-2.43} &1k & {93.2}{\ddplus{+0.0}} / {\color{gray}{{93.8}}}{\color{gray}{\ddplus{+0.0}}} \\
+    \rowcolor{linecolor!40}+ PLT ({ours})& - & \textbf{0.6} (\textbf{2.71}\%) & 5.0 & {90.88}\dplus{+0.86} & {90.02}\dplus{+1.73} & {85.46}\dplus{+0.28} &1k & {93.8}{\dplus{+0.6}} / {\color{gray}{{94.0}}}{\color{gray}{\ddplus{+0.2}}} \\
+    \bottomrule
+    \end{tabular}%
+  
+      \label{tab:sota}
+
+\end{table*}%

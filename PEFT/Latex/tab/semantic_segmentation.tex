@@ -1,0 +1,41 @@
+\begin{table}[t]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{1.5mm}
+  \caption{Semantic segmentation on the S3DIS~\cite{armeni20163d}. The
+    mean accuracy (mAcc) and mean IoU (mIoU) are reported.
+    Params. represents the trainable parameters. \#TP represents the tunable parameters.}
+    \vspace{-10pt}
+    \begin{tabular}{lcccc}
+    \toprule
+    Methods & Reference & \#TP (M)& mAcc (\%) & mIoU (\%) \\
+    \midrule
+    % \multicolumn{5}{c}{\textit{Supervised Learning Only}} \\
+    % \midrule
+    % PointNet~\cite{qi2017pointnet}  & CVPR 17  &- & 49.0 & 41.1 \\
+    % PointNet++~\cite{qi2017pointnet++}    & NeurIPS 17 &-  & 67.1 & 53.5 \\
+    % PointCNN~\cite{li2018pointcnn}  & NeurIPS 18 & - & 63.9 & 57.3 \\
+    % PCT~\cite{guo2021pct} & CVM 21& - & 67.7 & 61.3\\
+    % \midrule
+    % \multicolumn{5}{c}{\textit{ Self-Supervised Representation Learning (Efficient fine-tuning)}} \\
+    % \midrule
+    Point-MAE~\cite{pang2022masked} (baseline) &  ECCV 22 & 27.02 & 69.9 & 60.8 \\ 
+    + Linear probing & ICCV 23 & 5.20  & 63.4  & 52.5  \\
+    + IDPT~\cite{zha2023instance} & ICCV 23 & 5.64  & 65.0  & 53.1  \\
+    + Point-PEFT~\cite{tang2024point} & ICCV 23 & 5.58  & 66.5  & 56.0  \\
+    + DAPT~\cite{zhou2024dynamic} & CVPR 24 & 5.61  & 67.2 & 56.2 \\
+    + PointGST~\cite{liang2024parameter} & Arxiv 24 & 5.55  & 68.4 & 58.6 \\
+    \rowcolor{linecolor!40}+ PLT (\textbf{ours})& - & \textbf{2.04}  & \textbf{70.7} & \textbf{59.3} \\
+    \midrule
+    ACT~\cite{dong2022autoencoders} (baseline) &  ICLR 23 & 27.02 & 71.1 & 61.2 \\ 
+    + Linear probing & ICCV 23 & 5.20  & 64.1  & 52.0  \\
+    + IDPT~\cite{zha2023instance} & ICCV 23 & 5.64  & 64.1  & 52.1  \\
+    + Point-PEFT~\cite{tang2024point} & ICCV 23 & 5.58  & 66.0  & 54.6  \\
+    + DAPT~\cite{zhou2024dynamic} & CVPR 24 & 5.61  & 64.7 & 54.5 \\
+    + PointGST~\cite{liang2024parameter} & Arxiv 24 & 5.55  & 67.6 & 57.4 \\
+    \rowcolor{linecolor!40}+ PLT (\textbf{ours})& - & \textbf{2.04}  & \textbf{70.8} & \textbf{59.3} \\
+    \bottomrule
+    \end{tabular}
+    % \vspace{-15pt}
+  \label{tab:semantic_segmentation}
+\end{table}
