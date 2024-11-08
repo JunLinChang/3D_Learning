@@ -7,4 +7,5 @@
 
 ## 论文给的测试数据结果
 
-<video controls src="test_out.mp4" title="test paper"></video>
+[自己复现的结果](Results\论文里的测试数据\test_out.mp4)\
+[用论文checkpoint跑的结果](Results\论文里的测试数据\test_out1.mp4)
