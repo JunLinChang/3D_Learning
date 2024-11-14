@@ -2,7 +2,8 @@
 
 - [x] 跑通GPS-Gaussian，已跑通论文给的测试数据
 - [x] 阅读GPS-Guassian论文
-- [ ] 阅读RAFT-Stereo论文
+- [x] 阅读RAFT-Stereo论文
+- [x] 阅读RAFT光流估计论文
 - [ ] 处理自己采集的数据
 - [ ] 使用GPS-Guassian验证自采数据结果
 
@@ -61,5 +62,12 @@ GPS-Guassian算法步骤如下：
 
 ![alt text](figs/fps.png)
 
+## RAFT-Stereo
+
+### 方法
+
+### 实验结果
+
 ## 参考文献
 [1] Lipson, Lahav, Zachary Teed, and Jia Deng. "Raft-stereo: Multilevel recurrent field transforms for stereo matching." In 2021 International Conference on 3D Vision (3DV), pp. 218-227. IEEE, 2021.
+[2] Teed, Zachary, and Jia Deng. "Raft: Recurrent all-pairs field transforms for optical flow." In Computer Vision–ECCV 2020: 16th European Conference, Glasgow, UK, August 23–28, 2020, Proceedings, Part II 16, pp. 402-419. Springer International Publishing, 2020.
