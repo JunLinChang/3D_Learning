@@ -35,11 +35,12 @@ However, our empirical analysis (see Sec.~\ref{sec:classification}) reveals that
 
 In response, we introduce a novel fine-tuning approach for point cloud data, termed Point Ladder Tuning (PLT), which builds upon Ladder Side Tuning. While the backbone network’s attention mechanisms effectively capture global semantic information, which lacks the granularity needed for fine local detail. To overcome this, PLT incorporates a hierarchical Ladder Network to directly extract local information from raw input, enhancing the detail available for downstream tasks. Furthermore, we propose a Local-Global Fusion (LGF) module, which adaptively combines local information from the Ladder Network with global features from the backbone network, generating rich multi-scale representations essential for improving performance.
 
-To further optimize the pre-trained backbone for specific tasks, we introduce an adaptive prompt generation module. This module learns to scale and translate the fused features, producing instance-specific, multi-scale prompts that enable the backbone to refine its features with high efficiency and effectiveness.
+
 
 % \lrp{Extensive experiments across diverse point cloud datasets and configurations validate the effectiveness of our method. As illustrated in the results, our approach achieves a 0.28\% accuracy increase compared to PointMAE~\cite{pang2022masked} while using only 2.71\% of the parameters in the PB\_T5\_S setting of the ScanObjectNN dataset~\cite{uy2019revisiting}, and a 3.02\% gain over PointBert with full fine-tuning. On the ShapeNetPart dataset~\cite{wu20153d}, our approach shows an instance mIoU improvement of 0.1 over PointMAE~\cite{pang2022masked} and 0.3 over PointBert~\cite{yu2022point} using less than 40\% of the parameters compared to the current state-of-the-art method, PointGST. Moreover, on the S3DIS dataset~\cite{armeni20163d} for point cloud semantic segmentation, PLT improves mIoU by 0.7 over PointMAE and by 1.9 over ACT~\cite{dong2022autoencoders} compared to PointGST~\cite{liang2024parameter}, underscoring its superior performance and parameter efficiency.} (move to experiments section?)
 % \input{tab/origin_finetuning}
 
+To further optimize the pre-trained backbone for specific tasks, we introduce an adaptive prompt generation module. This module learns to scale and translate the fused features, producing instance-specific, multi-scale prompts that enable the backbone to refine its features with high efficiency and effectiveness.
 
 Our primary contributions are as follows:
 
