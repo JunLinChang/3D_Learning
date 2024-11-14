@@ -33,13 +33,14 @@
 
 Fine-tuning pre-trained models, though effective across domains, often incurs high computational and storage costs. To address this, we propose Point Ladder Tuning (PLT), an efficient fine-tuning approach for 3D point cloud learning that combines Ladder Side Tuning (LST) and prompt tuning to optimize parameter efficiency and task performance. While LST statically weights global activations but overlooks crucial local features, and prompt tuning lacks adaptability across instances, PLT integrates both local and global features to enhance optimization and adaptability.
 
-PLT introduces a hierarchical Ladder Network to extract local features directly from the input point cloud, which are fused with the backbone’s global activations via a Local-Global Fusion (LGF) module, creating multi-scale representations. Further, dynamic prompt tokens generated from these fused features refine the backbone’s global features, achieving high task-specific performance with minimal parameter updates. This approach thus maintains the semantic richness of pre-trained models while substantially reducing computational demands, demonstrating effectiveness across point cloud applications like semantic segmentation.
+PLT introduces a hierarchical Ladder network (HLN) that directly extracts local features from the input point cloud and fuses them with the global activations of the backbone network to create multi-scale representations. The HLN consists of two main components: (1) a set abstraction module, detailed in Sec.~\ref{sec:HLN}, and (2) a Local-Global Fusion module (LGF), discussed in Sec.~\ref{sec:LGF}. Further, dynamic prompt tokens generated from these fused features refine the backbone’s global features, achieving high task-specific performance with minimal parameter updates, which is described in Sec.~\ref{sec:FT_backbone}. This approach thus maintains the semantic richness of pre-trained models while substantially reducing computational demands, demonstrating effectiveness across point cloud applications like semantic segmentation.
 Our framework is shown in Fig.~\ref{fig:overall2}.
 
 \subsection{Hierarchical Ladder Network}
+\label{sec:HLN}
 Pre-trained models typically learn the global information of input point clouds through attention mechanisms but often overlook the importance of locality, which is crucial for downstream tasks, especially dense prediction tasks. Although Point PEF introduces a Geometry-Aware Adapter to capture local information, it still relies on the global intermediate activations of pre-trained models, which limits its ability to effectively learn local features within the original point cloud. Additionally, because pre-trained models often operate at a single scale throughout the learning process, lacking multi-scale information, this constraint further impedes performance on downstream tasks.
 
-To address these problems, we introduce a hierarchical Ladder network to better capture the intrinsic local information of the input point cloud. The module includes multiple PLT layers that are capable of capturing point cloud features at different scales, which has been shown to be effective in subsequent experiments. The PLT Layer consists of two main components: 1) Set Abstraction (SA), and 2) Local-Global Fusion Module (LGF).
+To address these problems, we introduce a hierarchical Ladder network to better capture the intrinsic local information of the input point cloud. The module includes multiple HLN layers that are capable of capturing point cloud features at different scales, which has been shown to be effective in subsequent experiments. The HLN Layer consists of two main components: (1) Set Abstraction (SA), and (2) Local-Global Fusion Module (LGF). Firstly, we will introduce the SA in this section and the LGF in Sec.~\ref{sec:LGF}.
 
 Given the input point cloud $P \in R^{N \times 3}$, where N is the num of the input point cloud, we first apply Point Embedding to map it into a high-dimensional space, obtaining the point cloud feature $F \in R^{N \times C}$, where is the dimension of the point cloud feature. Next, we use Set Abstraction (SA) to perform downsampling. This process begins with farthest point sampling (FPS) to select a set of center points $C=\{c_1, \ldots, c_n\}$. Then, we use k-nearest neighbors (KNN) to construct local neighborhoods $P(c)=\{p^1_c, \ldots,  p^k_c\}$, $F(c)=\{f^1_c, \ldots, f^k_c\}$ for each center point $c$. Finally, we apply max pooling followed by a multi-layer perceptron (MLP) to obtain the output point cloud. The formula for this process is as follows:
 \begin{flalign}
@@ -49,12 +50,13 @@ Given the input point cloud $P \in R^{N \times 3}$, where N is the num of the in
 where $\rho$ and $\varphi$ represent a MLP respectively, $[\cdot, \cdot]$ represents concat operation. And $h_{\boldsymbol{\Theta}}$ represents the aggregation function. Unless otherwise specified, we use Max-Pooling.
 
 \subsection{Local-Global Fusion Module}
-To make better use of the local information captured in the PLT Branch and the global information captured in the pre-trained backbone network, we propose a local-global fusion module that adaptively aggregates both types of information through selective attention. Given the input point cloud $P_{s}$ and their corresponding features $F_{s}$ from the PLT layer, as well as the output point cloud $P_{m}$ and its corresponding features $F_{m}$ from the backbone network, we firstly use $W$ to map the output features of the backbone network to match the same feature dimension as the input point cloud feature vectors of the PLT layer:
+\label{sec:LGF}
+To make better use of the local information captured in the PLT Branch and the global information captured in the pre-trained backbone network, we propose a local-global fusion module that adaptively aggregates both types of information through selective attention. Given the input point cloud $P_{s}$ and their corresponding features $F_{s}$ from the HLN layer, as well as the output point cloud $P_{m}$ and its corresponding features $F_{m}$ from the backbone network, we firstly use $W$ to map the output features of the backbone network to match the same feature dimension as the input point cloud feature vectors of the HLN layer:
 \begin{equation}
     \boldsymbol{F}_{m}^{'} = \boldsymbol{F}_mW 
 \end{equation}
 
-Next, we use the same operations as Set Abstraction (SA) to extract both the global features $F_g$, which are derived from the interaction between the input point cloud $P_s$ of the PLT layer and the output point cloud $P_m$ of the backbone network, and the local features $F_l$, which are obtained from the interaction between the input point clouds $P_s$ of the PLT layer.
+Next, we use the same operations as Set Abstraction (SA) to extract both the global features $F_g$, which are derived from the interaction between the input point cloud $P_s$ of the HLN layer and the output point cloud $P_m$ of the backbone network, and the local features $F_l$, which are obtained from the interaction between the input point clouds $P_s$ of the HLN layer.
 
 Finally, we apply a selective attention mechanism to adaptively fuse the global and local features. This mechanism allows the model to focus on the most relevant information from each source, ensuring that both global context and fine-grained local details are effectively integrated. Firstly, we apply the aggregation function $\mathcal{A}$, with average pooling as the default, to the global and local features to obtain the corresponding global and local feature vectors:
 \begin{equation}
@@ -85,6 +87,7 @@ Finally, we use an MLP $\tau$ to perform feature mapping and add the result to t
 By selectively emphasizing the most relevant local and global features through attention, our LGF ensures the effective integration of both types of information, enhancing the model's ability to capture multi-scale features. This is crucial for tasks that require a balance between fine-grained local details and the broader global structure of point clouds, especially in dense prediction tasks.
 
 \subsection{Fine-tuning on the Backbone Network}
+\label{sec:FT_backbone}
 To enable the pre-trained backbone network to generate more effective global features for downstream tasks, we propose a dynamic prompt generation method based on the multi-scale point cloud features output $F_{o}$ by the Local-Global Fusion (LGF) module. Firstly, $F_{o}$ is mean-pooled to obtain a compact representation. These pooled features are then scaled and translated using learnable parameters $\gamma$ and $\beta$ to generate multi-scale prompt $p$. To efficiently utilize parameters, we reuse $W$ to align the dimensions of the multi-scale prompts with the dimensions of the backbone network features. The formula can be expressed as follows:
 \begin{equation}
     p = \left( \boldsymbol{\gamma} \times \frac{1}{n}\sum_i^n{\boldsymbol{F}_{o}^i} + \boldsymbol{\beta} \right) W^T
@@ -96,7 +99,7 @@ Finally, we incorporate multi-scale prompts into the backbone network for learni
     \boldsymbol{x}_l=L_l\left(\left[\boldsymbol{T}_{c l s} ; \boldsymbol{p}_{0}, \ldots, \boldsymbol{p}_{i-1} ; \boldsymbol{T}\right]\right)
 \end{equation}
 
-To enhance performance further, we follows ssf\cite{lian2022scaling} and applies scaling and shifting to the output of each module within the backbone network, enabling the extraction of task-specific global information. Given an input $x$, the output $y$ can be expressed as:
+To enhance performance further, we follows ssf~\cite{lian2022scaling} and applies scaling and shifting to the output of each module within the backbone network, enabling the extraction of task-specific global information. Given an input $x$, the output $y$ can be expressed as:
 \begin{equation}
     \boldsymbol{y} = \boldsymbol{s} \times \boldsymbol{x} + \boldsymbol{t}
 \end{equation}
