@@ -24,7 +24,7 @@ For dense prediction tasks, such as part segmentation and semantic segmentation,
 
 We validate the effectiveness of PLT on ShapeNetPart dataset\cite{chang2015shapenet}. As shown in the Tab.\ref{tab:segmentation}, PLT achieves comparable results on Inst. mIoU, while significantly improving Cls. mIoU, particularly on PointBERT, where it outperforms DAPT by 0.5\%.
 
-We evaluate the proposed PLT on the semantic segmentation task using the S3DIS dataset\cite{armeni20163d}, with results shown in Tab.\ref{tab:semantic_segmentation}. It is clear that our PLT significantly outperforms other methods. When using ACT as the baseline, PLT achieves improvements of 7.2\%, 4.7\%, 4.8\%, and 1.9\% over IDPT, PointPEF, DAPT, and PointGST, respectively. Similarly, when using PointMAE as the baseline, PLT consistently outperforms other methods, further validating its effectiveness in dense prediction tasks.
+We evaluate the proposed PLT on the semantic segmentation task using the S3DIS dataset\cite{armeni20163d}, with results shown in Tab.\ref{tab:semantic_segmentation}. It is clear that our PLT significantly outperforms other methods. When using ACT as the baseline, PLT achieves improvements of 7.2\%, 4.7\%, 4.8\%, and 1.9\% over IDPT, PointPEF, DAPT, and PointGST, respectively. Similarly, when using PointMAE as the baseline, PLT consistently outperforms other methods, further validating its effectiveness in dense prediction tasks. Meanwhile, as shown in the Fig.\ref{fig:s3dis}, the semantic segmentation results on the S3DIS dataset clearly demonstrate that our proposed PLT achieves clearer segmentation boundaries and fewer misclassifications compared to other methods.
 
 \input{tab/segmentation}
 
@@ -37,6 +37,8 @@ We evaluate the proposed PLT on the semantic segmentation task using the S3DIS d
 \input{tab/fusion_way}
 
 \input{tab/sidenet}
+
+\input{fig/s3dis}
 
 \subsection{Ablation Study}
 
