@@ -7,3 +7,5 @@
 *.pdf
 *.out
 *.gz
+*.fdb_latexmk
+*.fls
