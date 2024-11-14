@@ -1,10 +1,10 @@
+\input{tab/sota}
+
 \section{Experiments}
 \label{sec:experiments}
 In this section, we present a comprehensive evaluation of the proposed Point Ladder Tuning (PLT) method through a series of experiments across multiple point cloud datasets and tasks. Our goal is to demonstrate the effectiveness of PLT in terms of both performance and parameter efficiency compared to existing state-of-the-art methods.
 \subsection{Experimental Settings}
 To ensure a fair comparison, we used the same experimental setup as the default fine-tuning method\cite{zha2023instance, zhou2024dynamic} for each baseline. During training, we freeze the weights of the pre-trained model and only fine-tune a small number of parameters for adding modules. All experiments were conducted on a single GeForce RTX 3090 GPU.
-
-\input{tab/sota}
 
 \subsection{3D Object Classification}
 \textbf{Object Classification on Real-World Dataset.} Pre-trained Point cloud models are typically trained on the ShapeNet dataset\cite{chang2015shapenet}, which consists of clean, uniformly distributed point clouds. However, real-world point clouds often suffer from issues such as noise and missing point, leading to diverse and challenging distributions. To evaluate the performance in these more realistic conditions, we use the ScanObjectNN dataset\cite{uy2019revisiting}, which contains approximately 15k point cloud samples across 15 categories. These point clouds are captured in indoor scenes and often include background interference and occlusions from other objects. As shown in Tab.\ref{tab:sota} We conduct experiments on on three variants of the ScanObjectNN dataset\cite{uy2019revisiting} (OBJ\_BG, OBJ\_ONLY, and PB\_T50\_RS), using two baseline models, PointBERT\cite{yu2022point} and PointMAE\cite{pang2022masked}, to assess the effectiveness of our PLT. Notably, PLT achieved better accuracy than full fine-tuning across all settings while utilizing only 2.71\% of the parameters. Especially, PLT achieved increases of 4.14\%, 1.73\%, and 3.02\% in the three ScanObjectNN\cite{uy2019revisiting} variants on Point-BERT. Compared to the state-of-the-art model PointGST, our LST improved accuracy by 0.45\% on PointBERT\cite{yu2022point} and 0.17\% on PointMAE\cite{pang2022masked} under the most challenging setting, PB\_T50\_RS, in ScanObjectNN\cite{uy2019revisiting}.
@@ -19,6 +19,10 @@ To ensure a fair comparison, we used the same experimental setup as the default 
 
 \input{tab/compare}
 
+\input{fig/s3dis}
+
+\input{tab/ablation}
+
 \subsection{3D Dense Prediction Task}
 For dense prediction tasks, such as part segmentation and semantic segmentation, we employ a prediction head similar to that of PointNext. This design allows us to leverage multi-scale information, enhancing performance while minimizing the number of trainable parameters.
 
@@ -28,8 +32,6 @@ We evaluate the proposed PLT on the semantic segmentation task using the S3DIS d
 
 \input{tab/segmentation}
 
-\input{tab/ablation}
-
 \input{tab/semantic_segmentation}
 
 \input{tab/part}
@@ -37,8 +39,6 @@ We evaluate the proposed PLT on the semantic segmentation task using the S3DIS d
 \input{tab/fusion_way}
 
 \input{tab/sidenet}
-
-\input{fig/s3dis}
 
 \subsection{Ablation Study}
 
