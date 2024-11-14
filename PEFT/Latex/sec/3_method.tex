@@ -22,7 +22,7 @@ where $\mu_{i}=\operatorname{sigmoid}\left(\frac{\alpha_{i}}{T}\right)$ is a gat
 
 
 Fine-tuning pre-trained models has demonstrated remarkable success across various domains, yet it often comes with high computational and storage costs. To address this issue, we propose Point Ladder Tuning (PLT), a novel fine-tuning approach that combines the strengths of Ladder Side Tuning (LST) and prompt tuning to achieve a more efficient balance between performance and parameter usage for 3D point cloud learning. 
-Our framework is shown in Fig.~\cite{fig:overall2}.
+Our framework is shown in Fig.~\ref{fig:overall2}.
 
 At the core of PLT, we introduce a hierarchical Ladder Network based on LST, which extracts local features directly from the raw input point cloud. These local features are then integrated with the global intermediate activations of the pre-trained backbone network through a Local-Global Fusion (LGF) module, facilitating the creation of multi-scale representations. To further improve performance, we generate prompt tokens from the fused local-global features, which are then used to fine-tune the global features of the backbone network. This approach significantly reduces the number of parameters that need to be updated, while retaining the rich semantic knowledge acquired during pre-training, thereby enhancing task-specific performance across various point cloud applications. Through this method, we offer a more computationally efficient solution without compromising the effectiveness of the pre-trained model.
 
