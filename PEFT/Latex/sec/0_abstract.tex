@@ -4,6 +4,6 @@
 \lr{
 	Point cloud analysis has made significant strides through the use of pre-trained models. However, traditional approaches to model adaptation, typically involve updating all model parameters with a full fine-tuning paradigm, which leads to both inefficient and suboptimal. 
 	In this paper, we focus on parameter-efficient transfer learning for point cloud analysis, aiming to balance task performance with parameter efficiency. 
-	To this end, we retain the parameters of the standard pre-trained models and incorporate a hierarchical Ladder Network (HLN) to extract local information directly from the input point cloud. 
+	To this end, we retain the parameters of the standard pre-trained models and incorporate a Hierarchical Ladder Network (HLN) to extract local information directly from the input point cloud. 
 	To integrate this local information with the backbone network's intermediate global activation, we propose a Local-Global Fusion (LGF) module. Furthermore, to enhance performance, fused multi-scale features are employed to generate dynamic prompts, enabling the backbone network to produce global features optimized for downstream tasks. Extensive experiments on tasks such as point cloud object classification and dense prediction validate the effectiveness of our approach. Our method demonstrates superior performance with substantially fewer parameters compared to full fine-tuning, utilizing only 2.71\% and 7.69\% of the parameters required for full fine-tuning in object classification and dense prediction, respectively. }
 \end{abstract}
