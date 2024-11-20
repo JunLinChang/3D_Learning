@@ -1,0 +1,32 @@
+\begin{table*}
+\footnotesize
+\setlength{\tabcolsep}{3.3mm}
+\captionof{table}{Training details for downstream fine-tuning.}
+% \vspace{-5pt}
+\begin{tabular}{lcccccc}
+\toprule
+    \multirow{2}{*}{Configuration}  &\multicolumn{3}{c}{Classification} & \multicolumn{2}{c}{Segmentation}\\
+		\cmidrule(r){2-4} \cmidrule(r){5-6}
+	 &ScanObjectNN & ModelNet & ModelNet Few-shot & ShapeNetPart & S3DIS     \\
+    \midrule
+ Optimizer & AdamW & AdamW & AdamW & AdamW & AdamW \\
+ Learning rate & 5e-4 & 5e-4 & 5e-4  & 2e-4 & 2e-4 \\
+ Weight decay & 5e-2 & 5e-2 & 5e-2 & 5e-2  & 5e-2 \\
+ Learning rate scheduler & cosine & cosine & cosine & cosine & cosine \\
+ Training epochs  & 300 & 300 & 150 & 300 & 60 \\
+ Warmup epochs& 10 & 10& 10 & 10 &10 \\
+ Batch size & 32 & 32& 32 & 16 & 32 \\
+ \midrule
+ Number of points  & 2048 & 1024& 1024 & 2048 & 2048 \\
+ Number of point patches & 128 & 64 & 64 & 128 & 128\\
+ Point patch size  & 32 & 32 & 32  & 32 & 32 \\
+ \midrule
+ number of layers & 3 & 3 & 3 & 3 & 3\\
+ HLN dims & [16, 32, 64, 128] & [16, 32, 64, 128] & [16, 32, 64, 128] & [32, 64, 128, 256] & [32, 64, 128, 256]\\
+ HLN strides & [4, 4, 4] & [4, 4, 4] & [4, 4, 4] & [4, 2, 2] & [4, 2, 2]\\
+ number of neighbors in HLN & [16, 8, 4] & [16, 8, 4] & [16, 8, 4] & [32, 16, 8] & [32, 16, 8] \\
+\bottomrule
+% \vspace{10pt}
+\end{tabular}
+\label{tab:paramas}
+\end{table*}

@@ -1,17 +1,52 @@
 \clearpage
 \setcounter{page}{1}
 \maketitlesupplementary
+\appendix
 
+\section{Dataset and Training Detail}
 
-\section{Rationale}
-\label{sec:rationale}
-% 
-Having the supplementary compiled together with the main paper means that:
-% 
-\begin{itemize}
-\item The supplementary can back-reference sections of the main paper, for example, we can refer to \cref{sec:intro};
-\item The main paper can forward reference sub-sections within the supplementary explicitly (e.g. referring to a particular experiment); 
-\item When submitted to arXiv, the supplementary will already included at the end of the paper.
-\end{itemize}
-% 
-To split the supplementary pages from the main paper, you can use \href{https://support.apple.com/en-ca/guide/preview/prvw11793/mac#:~:text=Delete%20a%20page%20from%20a,or%20choose%20Edit%20%3E%20Delete).}{Preview (on macOS)}, \href{https://www.adobe.com/acrobat/how-to/delete-pages-from-pdf.html#:~:text=Choose%20%E2%80%9CTools%E2%80%9D%20%3E%20%E2%80%9COrganize,or%20pages%20from%20the%20file.}{Adobe Acrobat} (on all OSs), as well as \href{https://superuser.com/questions/517986/is-it-possible-to-delete-some-pages-of-a-pdf-document}{command line tools}.
+All experiments are conducted on a single GeForce RTX 3090 GPU. During training, we freeze the weights of the pre-trained model and only fine-tune a small number of parameters for adding modules. The hyperparameter settings of the model are shown in Tab.~\ref{tab:paramas}.
+
+\textbf{ScanObjectNN}~\cite{uy2019revisiting} comprises approximately 15k point cloud samples across 15 categories captured in indoor scenes, often containing background interference and occlusions. There are three commonly-used variants, namely OBJ\_BG, OBJ\_ONLY, and PB\_T50\_RS, with the difficulty escalating successively. The training settings are in line with the baseline comparison. Specifically, the AdamW optimizer is employed with an initial learning rate of $5e^{-4}$ and a weight decay of 0.05. A cosine learning rate scheduler with 10 epochs of warm-up is also utilized. The model undergoes a total of 300 epochs of training, with a batch size of 32. For the sake of consistency, our sampling point cloud contains 2048 points, which are divided into 128 groups of 32 points each within the Patch Encoder.
+
+\textbf{ModelNet}~\cite{wu20153d} contains 12,311 clean 3D CAD models spanning 40 categories. Under the full-sample training setting, the network training configuration aligns with that used for ScanObjectNN. In the few-shot experiments, the model is trained for a total of 150 epochs. The input point cloud consists of 1,024 points, which are divided into 64 groups in the Patch Encoder, with each group containing 32 points.
+
+\textbf{ShapeNetPart}~\cite{yi2016scalable} is a widely used benchmark for point-level synthetic object part segmentation, comprising 16,881 samples across 16 object categories and 50 part categories. Training is conducted with the AdamW optimizer, employing a weight decay of $1e^{-4}$ and a cosine learning rate scheduler. The initial learning rate is set to $2e^{-4}$, with 11 epochs of warm-up. Models are trained for 300 epochs with a batch size of 16. Each input consists of 2,048 points, organized into 128 groups, with each group containing 32 points.
+
+\textbf{S3DIS}~\cite{armeni20163d} is a large-scale indoor scene dataset encompassing six areas with a total of 273 million points across 13 categories. Consistent with prior studies~\cite{dong2022autoencoders}, we recommend using Area 5 for evaluation to ensure a more reliable and fair assessment of performance in semantic segmentation task. The model training employs a cosine learning rate scheduler, starting with an initial learning rate of $2e^{-4}$. Training is conducted over 60 epochs with a batch size of 32, while other configurations remain identical to those used for ShapeNetPart~\cite{yi2016scalable}.
+
+\section{Additianal Experiments}
+
+\subsection{Performance Analysis}
+As illustrated in Fig.~\ref{fig:performance}, we compared the speed and memory usage of our PLT with previous methods during both training and inference. From Fig.~\ref{fig:per1}, we observe that with smaller batch sizes, our training speed is initially slower than that of full fine-tuning and even lower than IDPT. However, as the batch size increases, the training speed of our method surpasses that of full fine-tuning. Specifically, with a batch size of 128, our method is nearly 30\% faster than IDPT. Fig.~\ref{fig:per2} shows that our method consistently uses less training memory than full fine-tuning. In contrast, both IDPT and Point PEFT exhibit higher memory usage than full fine-tuning. Notably, with a batch size of 256, our approach reduces memory usage by 1.2 GB compared to full fine-tuning. As depicted in Fig.~\ref{fig:per3}, our method consistently outperforms IDPT and Point PEFT in inference speed, coming close to but slightly below that of full fine-tuning. Furthermore, as shown in Fig.~\ref{fig:per4}, the difference in memory usage during inference between our method and full fine-tuning is minimal. In comparison, IDPT and Point PEFT exhibit significantly higher memory usage differences, particularly at a batch size of 512.
+
+\subsection{Token Selections for Head Inputs}
+We analyzed the impact of different input tokens on downstream task heads, including the pooling of class token, prompt tokens, point patch tokens, and HLN output tokens. As illustrated in Figure 3, we evaluated five standard token selection methods. The results show that the best performance is achieved when all four token types are included. Interestingly, adding the pooled prompt tokens to the class token, rather than concatenating them, improves accuracy by 0.55\% while reducing the number of trainable parameters. Additionally, we observed that removing the point patch tokens leads to a more significant decline in performance compared to removing the prompt tokens or HLN output tokens. This highlights the critical role of prior information from pre-trained models in achieving high-quality downstream task performance.
+
+\subsection{Qualitative Analysis}
+
+\subsubsection{t-SNE Visualizations}
+Fig.~\ref{fig:tsne} visualizes the t-SNE feature manifolds generated by fully fine-tuned methods, point-cloud-specific fine-tuning approaches such as IDPT and DAPT, and our proposed PLT, all trained on the ScanObjectNN PB\_T50\_RS dataset. The dispersion of points between categories in the t-SNE plot reflects the quality of the model's feature representation—greater inter-cluster dispersion and smaller intra-cluster average  distance  indicates stronger discriminative power, making classification tasks easier.
+
+Notably, our PLT exhibits significantly greater inter-cluster dispersion alongside a smaller intra-cluster average  distance compared to previous methods. This suggests that our method effectively enhances the separation of features between categories while maintaining compactness within each category. Such properties indicate a superior ability to learn and represent discriminative features.
+
+Moreover, PLT achieves these results while utilizing fewer learnable parameters, demonstrating its efficiency in leveraging pre-trained models to adapt to downstream tasks. This advantage not only reduces the computational cost but also highlights PLT’s potential for broader applicability in resource-constrained scenarios. Compared to fully fine-tuned and point cloud-specific methods, PLT strikes a better balance between parameter efficiency and representation quality, establishing its value in point-cloud-based learning tasks.
+
+\subsubsection{Part Segmentation Visualizations}
+
+In Fig.~\ref{fig:part_segmentation}, we present a visual demonstration of the partial segmentation outcomes achieved by our proposed PLT, which is based on the PointMAE baseline. Specifically, we choose five representative samples from different categories. For each of these selected samples, we render three distinct perspectives. It is evident from the figure that our method demonstrates remarkable segmentation performance. Notably, our PLT method achieves high accuracy and precisely distinguishes object parts while maintaining efficiency with a minimal parameter set.
+
+\subsubsection{Semantic Segmentation Visualizations}
+
+Fig.~\ref{fig:semantic} presents a qualitative comparison of segmentation results between our proposed PLT method and previous fine-tuning approaches on semantic segmentation tasks in Area 5 of the S3DIS dataset. The comparison highlights the strengths of PLT in addressing common challenges associated with point cloud segmentation. From the first row of the figure, it is evident that full fine-tuning, despite being resource-intensive, struggles with accurately segmenting object boundaries. This limitation often leads to poor boundary delineation and misclassification in continuous regions, largely due to inadequate capture of point cloud local information. A more detailed comparison in office\_9 demonstrates that methods such as full fine-tuning, IDPT, and DAPT misclassify walls as beams and clutter areas as ceilings. In contrast, our PLT approach successfully addresses these issues, accurately segmenting clutter regions while significantly reducing wall misclassification. Similarly, in office\_35, PLT outperforms other methods in segmenting challenging areas such as the clutter region and the board. Where methods like full fine-tuning, IDPT, and PPT struggle to recognize or segment these regions effectively, PLT demonstrates superior performance, maintaining clarity and precision. These results underscore the capability of our PLT method to achieve outstanding segmentation performance while using significantly fewer fine-tuning parameters. Compared to other approaches, PLT not only produces clearer segmentation boundaries but also exhibits a marked reduction in misclassifications, confirming its efficiency and effectiveness for point cloud semantic segmentation tasks.
+
+\input{tab/appendix/parames}
+
+\input{fig/tsne}
+
+\input{fig/head}
+\input{fig/supplement/performance}
+
+\input{fig/supplement/part_segmentation}
+
+\input{fig/supplement/semantic_segmentation}
