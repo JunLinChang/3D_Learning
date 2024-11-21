@@ -1,0 +1,133 @@
+% CVPR 2025 Paper Template; see https://github.com/cvpr-org/author-kit
+
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%%%%%%%%% PAPER TYPE  - PLEASE UPDATE FOR FINAL VERSION
+% \usepackage{cvpr}              % To produce the CAMERA-READY version
+\usepackage[review]{cvpr}      % To produce the REVIEW version
+% \usepackage[pagenumbers]{cvpr} % To force page numbers, e.g. for an arXiv version
+
+% Import additional packages in the preamble file, before hyperref
+\input{preamble}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+\usepackage{footnote}
+\usepackage{url}
+\usepackage[flushleft]{threeparttable}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage {pifont} 
+\usepackage{bm}
+\usepackage{tablefootnote}
+\usepackage{balance}
+% It is strongly recommended to use hyperref, especially for the review version.
+% hyperref with option pagebackref eases the reviewers' job.
+% Please disable hyperref *only* if you encounter grave issues, 
+% e.g. with the file validation for the camera-ready version.
+%
+% If you comment hyperref and then uncomment it, you should delete *.aux before re-running LaTeX.
+% (Or just hit 'q' on the first LaTeX run, let it finish, and you should be clear).
+\usepackage{colortbl}
+% \usepackage[table]{xcolor}
+\usepackage{multirow}
+\usepackage{multicol}
+
+% It is strongly recommended to use hyperref, especially for the review version.
+% hyperref with option pagebackref eases the reviewers' job.
+% Please disable hyperref *only* if you encounter grave issues, 
+% e.g. with the file validation for the camera-ready version.
+%
+% If you comment hyperref and then uncomment it, you should delete *.aux before re-running LaTeX.
+% (Or just hit 'q' on the first LaTeX run, let it finish, and you should be clear).
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+
+\definecolor{lightgray}{gray}{0.9}
+\definecolor{linecolor}{rgb}{0.82, 0.94, 0.75}
+
+% Support for easy cross-referencing
+\usepackage[capitalize]{cleveref}
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+
+\definecolor{evaunit01green}{RGB}{82,208,83}
+\definecolor{lowred}{RGB}{238,18,137}
+\newcommand{\lowred}[1]{\textcolor{lowred}{#1}}
+\definecolor{lowerred}{RGB}{255,110,180}
+\newcommand{\lowerred}[1]{\textcolor{lowerred}{#1}}
+\newcommand{\dplus}[1]{\fontsize{6pt}{0.1em}\selectfont (\textbf{\textcolor{lowred}{#1}})}
+\newcommand{\ddplus}[1]{\fontsize{6pt}{0.1em}\selectfont (\textbf{\textcolor{lowerred}{#1}})}
+
+\definecolor{defaultcolor}{RGB}{12,127,17}
+\newcommand{\defaultcolor}[1]{\textcolor{defaultcolor}{#1}}
+\newcommand{\default}[1]{\fontsize{6pt}{0.1em}\selectfont (\textbf{\defaultcolor{#1}})}
+
+\definecolor{red}{RGB}{255,0,0}
+\definecolor{blue}{RGB}{0,0,255}
+\newcommand{\lr}[1]{\textcolor{blue}{#1}}
+
+
+\newcommand{\lrp}[1]{\textcolor{red}{#1}}
+
+\newcommand{\blk}[1]{}
+%\newcommand{\blk}[1]{#1}
+
+
+\def\recon{{\scshape ReCon}}
+
+\definecolor{learnable}{HTML}{d45c43}
+\definecolor{frozen}{HTML}{1f78b4}
+
+%%%%%%%%% PAPER ID  - PLEASE UPDATE
+\def\paperID{16372} % *** Enter the Paper ID here
+\def\confName{CVPR}
+\def\confYear{2025}
+
+%%%%%%%%% TITLE - PLEASE UPDATE
+\title{PLT: Point Ladder Tuning with Multi-Scale Prompt for Point Cloud Parameter-Efficient Learning}
+
+%%%%%%%%% AUTHORS - PLEASE UPDATE
+\author{First Author\\
+	Institution1\\
+	Institution1 address\\
+	{\tt\small firstauthor@i1.org}
+	% For a paper whose authors are all at the same institution,
+	% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+Second Author\\
+Institution2\\
+First line of institution2 address\\
+{\tt\small secondauthor@i2.org}
+}
+
+\begin{document}
+%\maketitle
+%\input{sec/0_abstract}  
+%\input{sec/1_intro}
+%\input{sec/2_relatedwork}
+%\input{sec/3_method}
+%\input{sec/4_experiment}
+%\input{sec/5_conclusion}
+\input{sec/X_suppl}
+{
+	\small
+	\bibliographystyle{ieeenat_fullname}
+	\bibliography{main}
+}
+
+% WARNING: do not forget to delete the supplementary pages from your submission 
+
+
+\end{document}
