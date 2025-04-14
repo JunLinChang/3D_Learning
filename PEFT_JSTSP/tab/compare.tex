@@ -1,0 +1,37 @@
+\begin{table}
+\scriptsize
+\setlength{\tabcolsep}{1.9mm}
+\centering
+\caption{Comparisons of parameter efficient transfer learning methods from NLP and 2D Vision on the hardest variant of ScanObjectNN~\cite{uy2019revisiting}. Overall accuracy (\%) without voting is reported. \#TP represents the tunable parameters. \textcolor{red}{$^*$} denotes reproduced results.}
+\label{tab:compare}
+\begin{tabular}{ lcccc }
+\toprule
+ Method &Reference& Design for &\#TP (M) & PB\_T50\_RS \\
+\midrule
+ Point-MAE~\cite{pang2022masked}  &ECCV 22 & - & 22.1 & 85.18  \\
+ Linear probing &- & - & 0.3& 75.99\\
+ \midrule
+  + Adapter~\cite{houlsby2019parameter}&ICML 19 & NLP & 0.9 & 83.93 \\
+  + Perfix tuning~\cite{li2021prefix}& ACL 21 & NLP &0.7 & 77.72  \\
+  + BitFit~\cite{zaken2022bitfit} & ACL 21 & NLP &0.3 & 82.62    \\
+  + LST~\cite{sung2022lst} & NeurIPS 22 & NLP & 0.8 & 82.75\\
+  + LoRA~\cite{hu2021lora} & ICLR 22 & NLP & 0.9&  81.74   \\
+  % + DEPT~\cite{shi2024dept} & ICLR 24 & NLP & 0.3 & 79.70\\
+  + FourierFT~\cite{Gao2024Fourier} & ICML 24 & NLP &0.3 & 78.57\\
+  \midrule
+  + VPT-Deep~\cite{jia2022visual}&ECCV 22 & 2D &0.4 &  81.09 \\
+  + AdaptFormer~\cite{chen2022adaptformer} &NeurIPS 22 & 2D &0.9  & 83.45 \\
+  + SSF~\cite{lian2022scaling} & NeurIPS 22 & 2D &0.4  & 82.58\\
+  + FacT~\cite{jie2023fact} & AAAI 23 & 2D & 0.5 & 78.76\\
+  % + BI-AdaptFormer~\cite{jie2023revisiting} & ICCV 23 & 2D & 0.4 & 83.66\\
+  + SCT~\cite{zhao2024sct} & IJCV 24 & 2D & 0.3 & 80.40\\
+  \midrule
+  + IDPT~\cite{zha2023instance} &ICCV 23 & 3D & 1.7 &84.94\\
+  + Point-PEFT\textcolor{red}{$^*$}~\cite{tang2024point} & AAAI 24 & 3D & 0.7 &84.35\\
+  + DAPT~\cite{zhou2024dynamic} & CVPR 24 & 3D & 1.1 & 85.08 \\
+  + PPT\textcolor{red}{$^*$}~\cite{zhang2024positional} & Arxiv 24 & 3D & 1.1 & 84.91\\
+  + PointGST~\cite{liang2024parameter} & Arxiv 24 & 3D & 0.6 & 85.29\\
+  \rowcolor{linecolor!40}+ PLT (\textbf{ours}) & - & 3D & 0.6 & \textbf{85.53} \\
+\bottomrule
+\end{tabular}
+\end{table}

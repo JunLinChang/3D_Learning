@@ -1,0 +1,20 @@
+\begin{table*}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{2.4mm}
+  \caption{Comparison of performance between our PLT and previous methods. We conduct experiments on the hardest variant (i.e., PB\_T50\_RS) of ScanObjectNN~\cite{uy2019revisiting} with Point-MAE baseline~\cite{pang2022masked} when the batch size is 32. Throughput (samples/s) is measured on single RTX 3090 GPU.}
+    \begin{tabular}{lccccccc}
+    \toprule
+    Methods & Parameter (M) & FLOPs (G) & Train Throughput (samples/s) & Train Memory (G) & Infer Speed (samples/s) & Infer Memory (G) & Acc. (\%) \\
+    \midrule
+    PointMAE~\cite{pang2022masked} & 22.09 & 4.93 & 151.2 & 5.24 & 232.7 & 0.85 & 85.18 \\
+    +IDPT~\cite{zha2023instance} & 1.70 & 7.27 & 126.3 & 5.10 & 204.3 & 0.96 & 84.94 \\
+    +DAPT~\cite{zhou2024dynamic} & 1.09 & 5.14 & 169.0 & 2.26 & 218.7 & 0.85 & 85.08 \\
+    +PointPEFT~\cite{tang2024point} & 0.77 & - & 48.5 & 8.64 & 65.6 & 1.12 & 84.35 \\
+    +PointGST~\cite{liang2024parameter} & 0.62 & 4.99 & 146.5 & 1.02 & 173.7 & 0.85 & 85.29 \\
+    +LST~\cite{sung2022lst} & 0.76 & 4.98 & 192.1 & 1.06 & 231.4 & 0.85 & 82.75 \\
+    +PLT (\textbf{ours}) & 0.60 & 5.02 & 165.4 & 2.26 & 210.8 & 0.85 & 85.53\\
+    \bottomrule
+    \end{tabular}
+  \label{tab:performance}
+\end{table*}

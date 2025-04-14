@@ -1,0 +1,33 @@
+%
+% --- inline annotations
+%
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\todo}[1]{{\color{red}#1}}
+\newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
+% --- disable by uncommenting  
+% \renewcommand{\TODO}[1]{}
+% \renewcommand{\todo}[1]{#1}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+
+% \definecolor{evaunit01green}{RGB}{82,208,83}
+\definecolor{rowunit}{RGB}{128,128,255}
+\definecolor{evaunit01green}{RGB}{54,125,189}
+\newcommand{\evagreen}[1]{\textcolor{evaunit01green}{#1}}
+\newcommand{\dtplus}[1]{\fontsize{6pt}{0.1em}\selectfont (\textbf{\evagreen{#1}})}
+
+\newcommand{\zzk}[1]{{\color{orange} #1}}
+
+\usepackage{tabularx}
+% \usepackage[showframe=true]{geometry}
+% Support for easy cross-referencing
+% \usepackage[capitalize]{cleveref}
+% \crefname{section}{Sec.}{Secs.}
+% \Crefname{section}{Section}{Sections}
+% \Crefname{table}{Table}{Tables}
+% \crefname{table}{Tab.}{Tabs.}
+\newcommand{\zhikang}[1]{{\color{blue} #1}}
+\newcommand{\yxq}[1]{{\color{green} }}
+\def\revise{\textcolor{magenta}}
+\newcommand{\ourmoudle}{progressive filtering strategy }
+
+\def\recon{{\scshape ReCon}}

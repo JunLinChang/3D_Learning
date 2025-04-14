@@ -68,6 +68,7 @@ Notably, our PLT demonstrates significantly greater inter-cluster dispersion and
 
 Furthermore, PLT achieves these results while using fewer learnable parameters, showcasing its efficiency in leveraging pre-trained models for adaptation to downstream tasks. This not only reduces computational cost but also highlights PLT's potential for broader applicability in resource-constrained environments. In comparison to fully fine-tuned and point-cloud-specific methods, PLT strikes an optimal balance between parameter efficiency and representation quality, underscoring its value in point cloud learning tasks.
 
+\input{fig/supplement/attention_score}
 
 %\subsubsection{Part Segmentation Visualizations}
 
@@ -79,8 +80,6 @@ Furthermore, PLT achieves these results while using fewer learnable parameters, 
 
 \subsubsection{Part Segmentation Visualizations}  
 Fig.~\ref{fig:part_segmentation} provides a visual demonstration of the part segmentation results obtained using our proposed PLT, based on the PointMAE~\cite{pang2022masked} baseline. We select five representative samples from various categories and render three distinct perspectives for each sample. The figure clearly illustrates that our method delivers exceptional segmentation performance. Notably, the PLT method achieves high accuracy in distinguishing object parts with remarkable precision, while maintaining efficiency by using a minimal set of parameters.
-
-\input{fig/supplement/attention_score}
 
 \subsubsection{Semantic Segmentation Visualizations}  
 Fig.~\ref{fig:semantic} presents a qualitative comparison of segmentation results between our proposed PLT method and prior fine-tuning approaches in semantic segmentation tasks on Area 5 of the S3DIS dataset~\cite{armeni20163d}. The comparison highlights the advantages of PLT in addressing common challenges in point cloud segmentation. From the first row of the figure, it is evident that while full fine-tuning is resource-intensive, it struggles to accurately segment object boundaries. This often results in poor boundary delineation and misclassification in continuous regions, primarily due to insufficient capture of local point cloud information. A more detailed comparison in the office\_9 scene reveals that methods such as full fine-tuning, IDPT~\cite{zha2023instance}, and DAPT~\cite{zhou2024dynamic} incorrectly classify walls as beams and cluttered regions as ceilings. In contrast, our PLT method successfully segments clutter regions while significantly reducing the misclassification of walls. Similarly, in the office\_35 scene, PLT outperforms other methods in segmenting challenging areas such as the cluttered region and the board. Whereas methods like full fine-tuning, IDPT~\cite{zha2023instance}, and PPT~\cite{zhang2024positional} fail to accurately recognize or segment these regions, PLT demonstrates superior performance, maintaining clarity and precision. These results emphasize the ability of the PLT method to deliver outstanding segmentation performance while using far fewer fine-tuning parameters. Compared to other approaches, PLT not only provides clearer segmentation boundaries but also significantly reduces misclassifications, further validating its efficiency and effectiveness for point cloud semantic segmentation tasks.
