@@ -4,7 +4,7 @@
 *.brf
 *.log
 *.blg
-*.pdf
+# *.pdf
 *.out
 *.gz
 *.fdb_latexmk
