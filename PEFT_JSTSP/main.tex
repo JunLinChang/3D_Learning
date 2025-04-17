@@ -1,0 +1,153 @@
+\documentclass[lettersize,journal]{IEEEtran}
+\usepackage{xcolor}
+\usepackage{subcaption} % 加载 subcaption 宏包
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{footnote}
+\usepackage{url}
+\usepackage[flushleft]{threeparttable}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{pifont} 
+\usepackage{bm}
+\usepackage{tablefootnote}
+\usepackage{balance}
+\usepackage{colortbl}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{hyperref}
+\definecolor{lightgray}{gray}{0.9}
+\definecolor{linecolor}{rgb}{0.82, 0.94, 0.75}
+
+% Support for easy cross-referencing
+\usepackage[capitalize]{cleveref}
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+
+\definecolor{evaunit01green}{RGB}{82,208,83}
+\definecolor{lowred}{RGB}{238,18,137}
+\newcommand{\lowred}[1]{\textcolor{lowred}{#1}}
+\definecolor{lowerred}{RGB}{255,110,180}
+\newcommand{\lowerred}[1]{\textcolor{lowerred}{#1}}
+\newcommand{\dplus}[1]{\fontsize{6pt}{0.1em}\selectfont (\textbf{\textcolor{lowred}{#1}})}
+\newcommand{\ddplus}[1]{\fontsize{6pt}{0.1em}\selectfont (\textbf{\textcolor{lowerred}{#1}})}
+
+\definecolor{defaultcolor}{RGB}{12,127,17}
+\newcommand{\defaultcolor}[1]{\textcolor{defaultcolor}{#1}}
+\newcommand{\default}[1]{\fontsize{6pt}{0.1em}\selectfont (\textbf{\defaultcolor{#1}})}
+
+\definecolor{red}{RGB}{255,0,0}
+\definecolor{blue}{RGB}{0,0,255}
+\newcommand{\lr}[1]{\textcolor{blue}{#1}}
+
+
+\newcommand{\lrp}[1]{\textcolor{red}{#1}}
+
+\newcommand{\blk}[1]{}
+
+
+\def\recon{{\scshape ReCon}}
+\input{preamble}
+
+\begin{document}
+
+\title{PLT: Point Ladder Tuning with Multi-Scale Prompt for Point Cloud
+Parameter-Efficient Learning}
+
+\author{IEEE Publication Technology,~\IEEEmembership{Staff,~IEEE,}
+        % <-this % stops a space
+\thanks{This paper was produced by the IEEE Publication Technology Group. They are in Piscataway, NJ.}% <-this % stops a space
+\thanks{Manuscript received April 19, 2021; revised August 16, 2021.}}
+
+% The paper headers
+% \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021}%
+% {Shell \MakeLowercase{\textit{et al.}}: A Sample Article Using IEEEtran.cls for IEEE Journals}
+
+\IEEEpubid{0000--0000/00\$00.00~\copyright~2021 IEEE}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+\maketitle
+
+\input{sec/0_abstract}
+
+\begin{IEEEkeywords}
+Point Cloud, Parameter-Efficient Learning, ladder side tuning.
+\end{IEEEkeywords}
+
+\input{sec/1_intro}
+\input{sec/2_relatedwork}
+\input{sec/3_method}
+\input{sec/4_experiment}
+\input{sec/5_conclusion}
+
+
+\section*{Acknowledgments}
+This should be a simple paragraph before the References to thank those individuals and institutions who have supported your work on this article.
+
+
+
+% {\appendix[Proof of the Zonklar Equations]
+% Use $\backslash${\tt{appendix}} if you have a single appendix:
+% Do not use $\backslash${\tt{section}} anymore after $\backslash${\tt{appendix}}, only $\backslash${\tt{section*}}.
+% If you have multiple appendixes use $\backslash${\tt{appendices}} then use $\backslash${\tt{section}} to start each appendix.
+% You must declare a $\backslash${\tt{section}} before using any $\backslash${\tt{subsection}} or using $\backslash${\tt{label}} ($\backslash${\tt{appendices}} by itself
+%  starts a section numbered zero.)}
+
+
+
+%{\appendices
+%\section*{Proof of the First Zonklar Equation}
+%Appendix one text goes here.
+% You can choose not to have a title for an appendix if you want by leaving the argument blank
+%\section*{Proof of the Second Zonklar Equation}
+%Appendix two text goes here.}
+
+{
+    \small
+    \bibliographystyle{IEEEtran}
+    \bibliography{main}
+}
+
+
+\newpage
+
+\section{Biography Section}
+If you have an EPS/PDF photo (graphicx package needed), extra braces are
+ needed around the contents of the optional argument to biography to prevent
+ the LaTeX parser from getting confused when it sees the complicated
+ $\backslash${\tt{includegraphics}} command within an optional argument. (You can create
+ your own custom macro containing the $\backslash${\tt{includegraphics}} command to make things
+ simpler here.)
+ 
+\vspace{11pt}
+
+\bf{If you include a photo:}\vspace{-33pt}
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{fig1}}]{Michael Shell}
+Use $\backslash${\tt{begin\{IEEEbiography\}}} and then for the 1st argument use $\backslash${\tt{includegraphics}} to declare and link the author photo.
+Use the author name as the 3rd argument followed by the biography text.
+\end{IEEEbiography}
+
+\vspace{11pt}
+
+\bf{If you will not include a photo:}\vspace{-33pt}
+\begin{IEEEbiographynophoto}{John Doe}
+Use $\backslash${\tt{begin\{IEEEbiographynophoto\}}} and the author name as the argument followed by the biography text.
+\end{IEEEbiographynophoto}
+
+
+
+
+\vfill
+
+\end{document}
+
+
