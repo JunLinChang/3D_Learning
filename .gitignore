@@ -1,13 +1,10 @@
-
 *.aux
 *.bbl
 *.brf
 *.log
 *.blg
-# *.pdf
+*.pdf
 *.out
 *.gz
 *.fdb_latexmk
 *.fls
-PEFT/Latex/main.pdf
-PEFT/Latex/main.pdf
