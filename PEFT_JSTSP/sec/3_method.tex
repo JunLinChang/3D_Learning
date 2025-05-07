@@ -33,26 +33,26 @@ Our framework is shown in Fig.~\ref{fig:overall2}.
 
 \subsection{Hierarchical Ladder Network}
 \label{sec:HLN}
-Pre-trained models primarily capture global information from input point clouds through attention mechanisms; however, they often overlook local features, which are essential for downstream tasks, particularly dense prediction. Although PointPEFT~\cite{tang2024point} introduces a Geometry-Aware Adapter to enhance local feature learning, it still relies heavily on the global intermediate activations of pre-trained models, limiting its ability to effectively capture intrinsic local features from the original point cloud. Furthermore, since most pre-trained models operate at a single scale, they lack the multi-scale information necessary for optimal performance in downstream tasks.
+Pre-trained models primarily capture global information from input point clouds through attention mechanisms; however, they often overlook local features, which are essential for downstream tasks, particularly dense prediction. Although PointPEFT~\cite{tang2024point} introduces a Geometry-Aware Adapter to enhance local feature learning, it still relies heavily on the global intermediate activations of pre-trained models, limiting its ability to effectively capture intrinsic local features from the original point cloud. Furthermore, since most pre-trained models operate at a single resolution, they lack the multi-resolution information necessary for optimal performance in downstream tasks especially semantic segmentation.
 
 To address these limitations, we propose a Hierarchical Ladder Network (HLN) to capture local information across multiple scales within the input point cloud. The HLN module includes multiple layers designed to capture features at varying scales, and our experiments validate its effectiveness. The HLN layer consists of two key components: (1) Set Abstraction (SA) and (2) Local-Global Fusion (LGF) module. 
 In this section, we introduce SA, with LGF discussed further in Sec.~\ref{sec:LGF}.
 
-Given an input point cloud $P \in \mathbb{R}^{N \times 3}$, where $N$ is the number of points, we first apply point embedding to map $P$ into a high-dimensional space, resulting in a point cloud feature matrix $F \in \mathbb{R}^{N \times C}$, where $C$ represents the feature dimension. We then use Set Abstraction (SA) for downsampling, starting with farthest point sampling (FPS) to select a set of center points $C=\{c_1, \ldots, c_n\}$. Next, k-nearest neighbors (KNN) constructs local neighborhoods $P(c)=\{p^1_c, \ldots, p^k_c\}$ and $F(c)=\{f^1_c, \ldots, f^k_c\}$ for each center point $c$. Finally, max pooling and a multi-layer perceptron (MLP) produce the output point cloud features, as defined by the following equations:
+Given an input point cloud $\boldsymbol{P} \in \mathbb{R}^{N \times 3}$, where $N$ is the number of points, we first apply point embedding to map $\boldsymbol{P}$ into a high-dimensional space, resulting in a point cloud feature matrix $\boldsymbol{F} \in \mathbb{R}^{N \times C}$, where $C$ represents the feature dimension. We then use Set Abstraction (SA) for downsampling, starting with farthest point sampling (FPS) to select a set of center points $\boldsymbol{C}=\{c_1, \ldots, c_n\}$. Next, k-nearest neighbors (KNN) constructs local neighborhoods $\boldsymbol{P}(c)=\{\boldsymbol{p}^1_c, \ldots, \boldsymbol{p}^k_c\}$ and $\boldsymbol{F}(c)=\{\boldsymbol{f}^1_c, \ldots, \boldsymbol{f}^k_c\}$ for each center point $c$. Finally, max pooling and a multi-layer perceptron (MLP) produce the output point cloud features, as defined by the following equations:
 \begin{flalign}
 	\boldsymbol{f}_{c} & = \varphi \left(\left[\boldsymbol{f}_{c}^{j} ;\left(\boldsymbol{p}_{c}-\boldsymbol{p}_{c}^{j}\right)\right]\right)\\
-	\boldsymbol{f}_{c}^{'} & = \boldsymbol{f}_{c} + \rho \left( h_{\boldsymbol{\Theta}}\left ( \boldsymbol{f}_{c} \right) \right)
+	\boldsymbol{f}_{c}^{'} & = \boldsymbol{f}_{c} + \rho \left( h_{\boldsymbol{\Theta}}\left( \boldsymbol{f}_{c} \right) \right)
 \end{flalign}
 where $\rho$ and $\varphi$ denote MLPs, $[\cdot, \cdot]$ indicates the concatenation operation, and $h_{\boldsymbol{\Theta}}$ represents the aggregation function. Unless otherwise specified, max pooling is used.
 
 \subsection{Local-Global Fusion Module}
 \label{sec:LGF}
-To effectively leverage the local features captured in the PLT branch alongside the global features from the pre-trained backbone, we introduce a Local-Global Fusion (LGF) module that adaptively combines both types of information via selective attention. Given an input point cloud $P_{s}$ with corresponding features $F_{s}$ from the HLN layer, and an output point cloud $P_{m}$ with features $F_{m}$ from the backbone network, we first map the backbone features to match the dimensionality of the HLN layer’s feature vectors using a learnable matrix $W$:
+To effectively leverage the local features captured in the HLN layer alongside the global features from the pre-trained backbone, we introduce a Local-Global Fusion (LGF) module that adaptively combines both types of information via selective attention. Given an input point cloud $\boldsymbol{P}_{s}$ with corresponding features $\boldsymbol{F}_{s}$ from the HLN layer, and an output point cloud $\boldsymbol{P}_{m}$ with features $\boldsymbol{F}_{m}$ from the backbone network, we first map the backbone features to match the dimensionality of the HLN layer’s feature vectors using a learnable matrix $W$:
 \begin{equation}
 	\boldsymbol{F}_{m}^{'} = \boldsymbol{F}_mW 
 \end{equation}
 
-We then perform Set Abstraction (SA) operations to extract global features $F_g$, which represent interactions between $P_s$ and $P_m$, and local features $F_l$, derived from the interactions within $P_s$ in the HLN layer.
+We then perform Set Abstraction (SA) operations to extract global features $\boldsymbol{F}_g$, which represent interactions between $\boldsymbol{P}_s$ and $\boldsymbol{P}_m$, and local features $\boldsymbol{F}_l$, derived from the interactions within $\boldsymbol{P}_s$ in the HLN layer.
 
 To fuse these global and local features, we employ a selective attention mechanism. This mechanism allows the model to focus adaptively on the most relevant information from each feature source, ensuring both global context and local details are integrated. First, we apply an aggregation function $\mathcal{A}$, typically average pooling, to obtain global and local feature vectors:
 \begin{equation}
@@ -65,7 +65,7 @@ These global and local features are then summed and passed through an MLP to pro
 \end{equation}
 where $\alpha$ represents an MLP.
 
-Using Softmax, we compute attention weights $s_g$ and $s_l$ for the global and local features:
+Using Softmax, we compute attention weights $\boldsymbol{s}_g$ and $\boldsymbol{s}_l$ for the global and local features:
 \begin{equation}
 	\boldsymbol{s}_g^i = \frac{e^{\boldsymbol{z}_g^i}}{e^{\boldsymbol{z}_g^i} + e^{\boldsymbol{z}_l^i}}, \quad \boldsymbol{s}_l^i = \frac{e^{\boldsymbol{z}_l^i}}{e^{\boldsymbol{z}_g^i} + e^{\boldsymbol{z}_l^i}}
 \end{equation}
@@ -90,10 +90,13 @@ To enable the pre-trained backbone network to produce enhanced global features t
 \end{equation}
 where $n$ is the number of tokens in $F_o$.
 
-Finally, the multi-scale prompts are incorporated into the backbone network during training. The output of the $l$-th transformer layer, $x_l$, is given by:
+Finally, the multi-scale prompts $P=[p_{0}, \ldots, p_{i-1}]$ are incorporated into the backbone network during training. The output of the $l$-th transformer layer, $x_l$, is given by:
 \begin{equation}
-	\boldsymbol{x}_l = L_l\left(\left[\boldsymbol{T}_{cls} ; \boldsymbol{p}_{0}, \ldots, \boldsymbol{p}_{i-1} ; \boldsymbol{T}\right]\right)
+	\boldsymbol{x}_l = L_l\left(\left[\boldsymbol{T}_{cls} ; \boldsymbol{P} ; \boldsymbol{T}^{G}\right]\right)
 \end{equation}
+where $T^G$ represents the global tokens from the backbone network. 
+
+The multi-scale prompts are inserted into the input sequence of each transformer layer, allowing them to interact with the original tokens through attention mechanisms. This approach enables the model to learn task-specific representations while preserving the pre-trained model's semantic richness.
 
 To further enhance performance, we follow SSF~\cite{lian2022scaling} and apply scaling and shifting to the output of each module within the backbone network, enabling the extraction of task-specific global information. Given an input $x$, the output $y$ is calculated as:
 \begin{equation}
@@ -101,4 +104,30 @@ To further enhance performance, we follow SSF~\cite{lian2022scaling} and apply s
 \end{equation}
 where $s$ and $t$ are learnable scaling and shifting parameters, respectively.
 
+\subsection{Downstream Head}
+\label{sec:head}
+
+\subsubsection{Classification Head}
+For classification tasks, we construct the output representation using a combination of global and local feature aggregations as follows:
+\begin{equation}
+\boldsymbol{x}_o = [\boldsymbol{x}_{\text{cls}} + \mathcal{A}_{\text{avg}}(\boldsymbol{P}), ; \mathcal{A}_{\text{max}}(\boldsymbol{T}^{G}), ; \mathcal{A}_{\text{max}}(\boldsymbol{T}^{L})]
+\end{equation}
+where $\mathcal{A}_{\text{avg}}$ and $\mathcal{A}_{\text{max}}$ denote average pooling and max pooling operations, respectively. The combined feature $\boldsymbol{x}_o$ incorporates the class token $\boldsymbol{x}_{\text{cls}}$, prompt tokens $\boldsymbol{P}$, and both global and local token representations  $\boldsymbol{T}^{G}$ and $\boldsymbol{T}^{L}$, extracted from the outputs of the backbone and the HLN, respectively. This aggregated representation is then fed into a MLP, followed by a softmax activation to produce the final classification output:
+\begin{equation}
+\boldsymbol{y}_{\text{cls}} = \operatorname{softmax}\left( \operatorname{MLP}(\boldsymbol{x}_o) \right)
+\label{eq:MLP}
+\end{equation}
+
+
+\subsubsection{Segmentation Head}
+Unlike classification tasks, semantic segmentation requires per-point predictions, necessitating the recovery of features for all original points. A common approach is to propagate features from downsampled representations back to the original point cloud through feature interpolation. However, most existing parameter-efficient fine-tuning methods~\cite{zha2023instance,zhou2024dynamic,liang2024parameter} for point cloud lack the ability to capture multi-resolution information, leading to a considerable loss of local detail.
+
+To address this issue, we introduce an additional Hierarchical Local Network (HLN) branch to extract fine-grained multi-resolution features from the spatial domain. Inspired by PointNext~\cite{qian2022pointnext}, we employ an inverse distance-weighted interpolation strategy to progressively recover the point-level features at each resolution. Unlike PointNext~\cite{qian2022pointnext}, our method leverages both the global features from the backbone and the multi-resolution local features from HLN. During each interpolation step, these are concatenated to form a comprehensive representation:
+
+\begin{equation}
+\boldsymbol{T}^{\text{interp}} = \left[\operatorname{Interp}(\boldsymbol{T}, \boldsymbol{T}^{\text{G}}),; \operatorname{Interp}(\boldsymbol{T}, \boldsymbol{T}^{\text{L}})\right]
+\end{equation}
+where $\boldsymbol{T}$ denotes the point features at the current layer, while $\boldsymbol{T}^{\text{G}}$ and $\boldsymbol{T}^{\text{L}}$ represent the global features from the backbone and local features from HLN at the next layer, respectively. The function $\operatorname{Interp}(\cdot)$ performs inverse distance interpolation~\cite{qian2022pointnext}.
+
+At each resolution, we concatenate the interpolated features $\boldsymbol{T}^{\text{interp}}$ with the corresponding original features $\boldsymbol{T}$, and then pass them through a MLP to obtain updated features. This process is repeated iteratively until the resolution of the original point cloud is restored. Finally, point-wise classification is performed using a MLP followed by a softmax activation, as defined in Eq.~\eqref{eq:MLP}, to predict the semantic category of each point.
 

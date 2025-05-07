@@ -42,7 +42,7 @@ These results reveal that many PEFT approaches from other domains struggle with 
 \input{tab/origin_finetuning}
 
 \subsection{3D Dense Prediction Task}
-For dense prediction tasks, including part segmentation and semantic segmentation, we adopt a prediction head similar to that of PointNext~\cite{qian2022pointnext}, allowing us to effectively utilize multi-scale information and enhance performance while maintaining a low number of trainable parameters.
+For dense prediction tasks, including part segmentation and semantic segmentation, we adopt a prediction head similar to that of PointNext~\cite{qian2022pointnext}, allowing us to effectively utilize multi-resolution information and enhance performance while maintaining a low number of trainable parameters.
 
 We validate the effectiveness of PLT on the ShapeNetPart dataset~\cite{yi2016scalable}, comprising 16,881 samples distributed across 16 object categories and 50 part categories. Training is performed using the AdamW optimizer with a weight decay of 0.05 and a cosine learning rate scheduler. The initial learning rate is set to $2 \times 10^{-4}$, with a warm-up period of 10 epochs. The models are trained for 300 epochs using a batch size of 16. As shown in Tab.~\ref{tab:segmentation}, PLT achieves results comparable to other methods in terms of instance-level mIoU (Inst. mIoU) while achieving notable improvements in class-level mIoU (Cls. mIoU). Specifically, PLT improves Inst. mIoU on PointBERT~\cite{yu2022point} by 0.5\% over DAPT~\cite{zhou2024dynamic}, demonstrating its effectiveness in capturing fine-grained details.
 
