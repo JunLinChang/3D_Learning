@@ -1,6 +1,7 @@
 \section{Related Work}
 \label{sec:relatedwork}
-The field of point cloud analysis has witnessed significant advancements in recent years, largely driven by the development of self-supervised pre-trained models and fine-tuning techniques. We give a review for pre-trained models and fine-tuning technologies for point cloud analysis.
+
+Recent advances in point cloud analysis have been driven by deep learning methods, including both supervised architectures and self-supervised pre-training techniques. Meanwhile, Parameter-Efficient Fine-Tuning (PEFT) approaches—originally developed for NLP and vision—have shown promise in adapting large pre-trained models with minimal parameter updates. In this section, we review representative methods in both areas: deep learning techniques for 3D point cloud processing and the evolution of PEFT strategies across domains.
 
 \subsection{Deep Learning on Point Cloud}
 
@@ -9,7 +10,7 @@ Deep learning on point clouds has evolved significantly, with various architectu
 
 Recent advancements in self-supervised pre-trained models for point cloud data have gained considerable attention due to their strong performance across a range of computer vision tasks. These models are typically trained on extensive unlabeled datasets and later fine-tuned for specific downstream applications. Point cloud pre-training methods can be broadly categorized into three primary approaches: contrastive learning, reconstruction-based learning, and hybrid approaches that integrate both.
 
-In contrastive learning, models like PointContrast~\cite{xie2020pointcontrast} and CrossPoint~\cite{afham2022crosspoint} capture semantic priors by comparing different perspectives of a unified point cloud, effectively learning discriminative features. Reconstruction-based methods, such as PointBERT~\cite{yu2022point} and PointMAE~\cite{pang2022masked}, draw inspiration from NLP and vision models by employing masked prediction and autoencoding frameworks. For instance, PointBERT adapts BERT-style masked patch prediction with a dVAE-based tokenizer for point clouds, while PointMAE reconstructs masked point coordinates through an autoencoder. Hybrid methods like ReCon~\cite{qi2023contrast} combine both contrastive and reconstruction objectives, leveraging multi-modal inputs such as images and text to enrich feature learning during pre-training.
+In contrastive learning, models like PointContrast~\cite{xie2020pointcontrast} and CrossPoint~\cite{afham2022crosspoint} capture semantic priors by comparing different perspectives of a unified point cloud, effectively learning discriminative features. Reconstruction-based methods, such as PointBERT~\cite{yu2022point} and PointMAE~\cite{pang2022masked}, draw inspiration from NLP and vision models by employing masked prediction and autoencoding frameworks. For instance, PointBERT adapts BERT-style masked patch prediction with a dVAE-based tokenizer for point clouds, while PointMAE reconstructs masked point coordinates through an autoencoder. To mitigate the challenge of limited labeled 3D data, ACT~\cite{dong2022autoencoders} utilizes a cross-modal teacher-student framework. It transfers knowledge from a fine-tuned cross-modal pre-trained teacher to a 3D point cloud learner, enabling the latter to acquire rich semantic representations through distillation.
 
 \lr{add Graph-Based Methods, e.g., DGCNN, GraphTER; Transformer-Based Methods, e.g., Point Transformer(https://arxiv.org/pdf/2012.09164), Point-MAE. and compare the main difference of these methods}
 
