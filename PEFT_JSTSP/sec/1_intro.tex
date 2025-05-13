@@ -4,27 +4,39 @@
 
 The rapid advancement of 3D sensing technologies has led to the widespread availability of point cloud data, driving the development of learning-based 3D understanding methods. Applications span a variety of domains, including autonomous driving~\cite{yang2024visual,song2024graphbev,chen20203d}, virtual/augmented reality~\cite{casado2023rendering,garrido2021point}, and robotics~\cite{wang2021trajectory,chen2022direct,christen2023learning}. Unlike regular 2D images, point clouds are inherently sparse, unstructured, and permutation-invariant, posing unique challenges for representation learning. These characteristics require models capable of capturing fine-grained local geometric structures while preserving global spatial coherence—tasks that conventional grid-based architectures are ill-suited to handle.
 
-Recent advances have demonstrated the effectiveness of deep learning models tailored for point clouds~\cite{qi2017pointnet, qi2017pointnet++, li2018pointcnn, qian2022pointnext, wang2019dynamic, wu2024point}, yielding substantial advancements in this domain. Inspired by the success of pre-trained models in NLP~\cite{devlin2018bert, brown2020language} and vision~\cite{he2020momentum, chen2020improved}, a growing body of work explores self-supervised pre-training for point cloud~\cite{pang2022masked, yu2022point, zhang2022point, afham2022crosspoint}. These approaches typically rely on full fine-tuning, updating all model parameters for downstream tasks. However, this practice suffers from three key limitations: (1) risk of overfitting and catastrophic forgetting, (2) inefficiency in storage due to separate copies of models for each task, and (3) high computational cost, limiting scalability.
+The recent advances in deep learning models that tailored for point clouds~\cite{qi2017pointnet, qi2017pointnet++, li2018pointcnn, qian2022pointnext, wang2019dynamic, wu2024point} as well as pre-trained models in NLP~\cite{devlin2018bert, brown2020language} and vision~\cite{he2020momentum, chen2020improved}, have demonstrated remarkable effectiveness. These developments have significantly advanced self-supervised pre-training methods for point clouds~\cite{pang2022masked, yu2022point, zhang2022point, afham2022crosspoint}.
+These approaches typically rely on full fine-tuning, updating all model parameters for downstream tasks. However, this practice suffers from three key limitations: (1) risk of overfitting and catastrophic forgetting, (2) inefficiency in storage due to separate copies of models for each task, and (3) high computational cost, limiting scalability.
 
-To address these issues, Parameter-Efficient Fine-Tuning (PEFT) methods have emerged as a promising alternative~\cite{houlsby2019parameter, jie2023fact, karimi2021compacter}. PEFT freezes the majority of pre-trained weights and introduces a small set of trainable parameters for adaptation, including adapters~\cite{houlsby2019parameter, chen2022adaptformer}, prompt tuning~\cite{li2021prefix, lester-etal-2021-power}, and ladder networks~\cite{sung2022lst}. While effective in language and vision domains, directly applying these methods to 3D point clouds often results in suboptimal performance due to the unique geometric complexity and locality requirements of point cloud data.
+To address these issues, Parameter-Efficient Fine-Tuning (PEFT) methods have emerged as a promising alternative~\cite{houlsby2019parameter, jie2023fact, karimi2021compacter}. PEFT freezes the majority of pre-trained weights and introduces a small set of trainable parameters for adaptation, including adapters~\cite{houlsby2019parameter, chen2022adaptformer}, prompt tuning~\cite{li2021prefix, lester-etal-2021-power}, and ladder networks~\cite{sung2022lst}. Although these techniques have demonstrated efficacy in language and vision domains, their direct application to 3D point clouds frequently yields suboptimal results, primarily due to the inherent geometric complexity and local structural dependencies characteristic of point cloud data.
 
 In this work, we propose \textbf{Point Ladder Tuning (PLT)}, a novel PEFT framework specifically designed for point cloud learning. PLT is built upon the observation that (1) the early layers of point cloud encoders learn transferable low-level geometric priors—such as surface curvature and neighborhood topology—that are broadly applicable across tasks, and (2) task-specific adaptation primarily relies on refining localized structural features, rather than re-learning global representations that are already well-established during pre-training.
 
-PLT introduces three key components:
+PLT introduces three key components:\textbf{Hierarchical Ladder Network (HLN)}, \textbf{Local-Global Fusion (LGF)}, \textbf{Dynamic Prompt Generation}.
 
 \textbf{Hierarchical Ladder Network (HLN)}: A parallel branch that processes raw point clouds to extract multi-resolution local features. Through progressive downsampling, HLN preserves spatial granularity and semantic richness, offering detailed representations crucial for fine-grained tasks like segmentation.
 
-\textbf{Local-Global Fusion (LGF)}: A fusion mechanism that integrates HLN's local features with frozen backbone's global representations at multiple scales. This bridges the gap between task-agnostic global knowledge and task-specific local information, enabling more effective and efficient adaptation.
+\textbf{Local-Global Fusion (LGF)}: A fusion mechanism that integrates HLN's local features with frozen backbone's global representations at multiple scales. This bridges the gap between task-agnostic global knowledge and task-specific local patterns, enabling more effective and efficient adaptation.
 
-\textbf{Dynamic Prompt Generation}: Leveraging the fused features, PLT generates instance-aware, multi-scale prompts that guide the frozen backbone to produce enhanced global representations, further improving performance across tasks.
+\textbf{Dynamic Prompt Generation}: Building upon the fused representations, PLT generates instance-specific, multi-scale prompts that dynamically modulate the frozen backbone's behavior. These adaptive prompts enhance the model's ability to produce task-relevant global features, leading to consistent performance improvements across diverse applications.
 
 These modules work in synergy to achieve highly competitive performance while tuning only a small subset of parameters. Our experiments show that PLT consistently outperforms existing PEFT methods and even rivals full fine-tuning across a wide range of point cloud benchmarks—including semantic segmentation on S3DIS~\cite{armeni20163d} and ScanNetV2~\cite{dai2017scannet}, and classification on ModelNet40~\cite{wu20153d}.
 
-In summary, our contributions are as follows:
+%In summary, our contributions are as follows:
+%\begin{itemize}
+%\item We propose Point Ladder Tuning (PLT), a novel PEFT framework for point cloud learning that combines hierarchical local feature extraction with efficient global adaptation.
+%\item We introduce the Hierarchical Ladder Network (HLN) and Local-Global Fusion (LGF) modules, enabling multi-resolution geometric representation and effective integration with frozen pre-trained backbones.
+%\item We develop a dynamic prompt generation mechanism to inject task-aware, instance-specific information into the backbone, further boosting performance.
+%\end{itemize}
+
+In summary, this work makes these key contributions:
 \begin{itemize}
-\item We propose Point Ladder Tuning (PLT), a novel PEFT framework for point cloud learning that combines hierarchical local feature extraction with efficient global adaptation.
-\item We introduce the Hierarchical Ladder Network (HLN) and Local-Global Fusion (LGF) modules, enabling multi-resolution geometric representation and effective integration with frozen pre-trained backbones.
-\item We develop a dynamic prompt generation mechanism to inject task-aware, instance-specific information into the backbone, further boosting performance.
-\item Extensive experiments across multiple tasks and datasets demonstrate that PLT achieves state-of-the-art results among PEFT methods, with performance comparable to full fine-tuning while requiring significantly fewer tunable parameters.
+	\item \textbf{A novel parameter-efficient framework for point clouds:} We present Point Ladder Tuning (PLT), the first PEFT approach that effectively bridges hierarchical local geometric processing with global feature adaptation for point cloud learning. Our framework achieves superior performance while maintaining computational efficiency through minimal parameter updates.
+	
+	\item \textbf{Multi-scale geometric representation learning:} We propose two innovative components: (i) the Hierarchical Ladder Network (HLN) that preserves fine-grained spatial information through progressive downsampling, and (ii) the Local-Global Fusion (LGF) module that optimally combines multi-resolution local features with frozen backbone representations. Together, these enable comprehensive geometric understanding while maintaining pretrained knowledge.
+	
+	\item \textbf{Dynamic task-aware adaptation:} We develop a novel prompt generation mechanism that produces instance-specific, multi-scale prompts conditioned on fused local-global features. This dynamic approach significantly enhances the frozen backbone's ability to adapt to diverse tasks without compromising its original representational power.
 \end{itemize}
+
+
+Extensive experiments across multiple tasks and datasets demonstrate that PLT achieves state-of-the-art results among PEFT methods, with performance comparable to full fine-tuning while requiring significantly fewer tunable parameters.
 
