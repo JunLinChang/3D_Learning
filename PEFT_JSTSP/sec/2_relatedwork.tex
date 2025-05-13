@@ -1,7 +1,7 @@
 \section{Related Work}
 \label{sec:relatedwork}
 
-Recent advances in point cloud analysis have been driven by deep learning methods, including both supervised architectures and self-supervised pre-training techniques. Meanwhile, Parameter-Efficient Fine-Tuning (PEFT) approaches—originally developed for NLP and vision—have shown promise in adapting large pre-trained models with minimal parameter updates. In this section, we review representative methods in both areas: deep learning techniques for 3D point cloud processing and the evolution of PEFT strategies across domains.
+Recent advances in point cloud analysis have been driven by deep learning methods, including both supervised architectures and self-supervised pre-training techniques. Meanwhile, Parameter-Efficient Fine-Tuning (PEFT) approaches, originally developed for NLP and vision, have shown promise in adapting large pre-trained models with minimal parameter updates. In this section, we review representative methods in both areas: deep learning techniques for 3D point cloud processing and the evolution of PEFT strategies across domains.
 
 \subsection{Deep Learning on Point Cloud}
 
@@ -14,7 +14,7 @@ In contrastive learning, models like PointContrast~\cite{xie2020pointcontrast} a
 
 %\lr{add Graph-Based Methods, e.g., DGCNN, GraphTER; Transformer-Based Methods, e.g., Point Transformer(https://arxiv.org/pdf/2012.09164), Point-MAE. and compare the main difference of these methods}
 
-Traditionally, these 3D pre-trained models are fine-tuned for downstream tasks through full parameter updates. However, full fine-tuning can be inefficient, often resulting in the degradation of valuable knowledge gained during pre-training and increasing the risk of catastrophic forgetting. This paper, therefore, investigates more efficient and effective strategies for transferring 3D pre-trained models to downstream tasks while preserving the benefits of pre-training.
+Traditionally, these 3D pre-trained models are fine-tuned for downstream tasks through full parameter updates. However, full fine-tuning can be inefficient, often resulting in the degradation of valuable knowledge gained during pre-training and increasing the risk of catastrophic forgetting. Therefore, this paper investigates more efficient and effective strategies for transferring 3D pre-trained models to downstream tasks while preserving the benefits of pre-training.
 
 \subsection{Parameter Efficient Fine-tuning}
 Fine-tuning pre-trained models often demands substantial computational and storage resources. To address these limitations, parameter-efficient fine-tuning (PEFT) techniques have been developed, particularly within natural language processing (NLP) and computer vision. PEFT methods aim to transfer knowledge from pre-trained models to downstream tasks with minimal parameter updates. 

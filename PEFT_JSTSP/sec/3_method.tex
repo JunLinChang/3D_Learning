@@ -50,7 +50,7 @@ Let $\mathbf{F}_l$ and $\mathbf{F}_g$ denote local and global token features fro
 	\mathbf{F}_g' = \mathbf{F}_g W
 \end{equation}
 
-We then apply an aggregation operation akin to SA without spatial downsampling to capture cross-level interactions. This results in global features $\mathbf{F}_g''$, which model interactions between the local tokens $\mathbf{T}^{L}$ and global tokens $\mathbf{T}^{G}$, while $\mathbf{F}_l$ preserves the intra-local interactions within $\mathbf{T}^{L}$.
+We then apply an aggregation operation similar to SA without spatial downsampling to capture cross-level interactions. This results in global features $\mathbf{F}_g''$, which model interactions between the local tokens $\mathbf{T}^{L}$ and global tokens $\mathbf{T}^{G}$, while $\mathbf{F}_l$ preserves the intra-local interactions within $\mathbf{T}^{L}$.
 
 To fuse these global and local features, we employ a selective attention mechanism. This mechanism allows the model to focus adaptively on the most relevant information from each feature source, ensuring both global context and local details are integrated effectively. First, we apply an aggregation function $\mathcal{A}$, typically average pooling, to obtain global and local feature descriptors:
 
