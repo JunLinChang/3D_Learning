@@ -4,24 +4,18 @@
 \section{Methodology}
 \label{sec:methodology}
 
-To enable effective point cloud fine-tuning of pre-trained models while mitigating the high computational and storage costs associated with full-parameter updates, we propose Point Ladder Tuning (PLT), a parameter-efficient fine-tuning framework for 3D point cloud learning that that integrates hierarchically structured local pathways with dynamic multi-scale prompt guidance. PLT enhances parameter efficiency and task performance by jointly leveraging local geometric details and global semantic cues, thereby overcoming two key limitations: (1) the inability of Ladder Side-Tuning (LST)~\cite{sung2022lst} to effectively capture fine-grained local features, and (2) the limited instance-level adaptability of conventional prompt tuning methods.
+To enable effective point cloud fine-tuning of pre-trained models while mitigating the high computational and storage costs associated with full-parameter updates, we propose Point Ladder Tuning (PLT), a parameter-efficient fine-tuning framework for 3D point cloud learning that that integrates hierarchically structured local pathways with dynamic multi-scale prompt guidance. PLT enhances parameter efficiency and task performance by jointly leveraging local geometric details and global semantic cues, thereby overcoming two key limitations: (1) the inability of Ladder Side-Tuning (LST)~\cite{sung2022lst} to effectively capture fine-grained local features, and (2) the limited instance-level adaptability of conventional prompt tuning methods~\cite{li2021prefix}.
 
-The core idea behind PLT is to decouple the fine-tuning process into two synergistic pathways: (1) a lightweight \textbf{Hierarchical Ladder Network (HLN)} that enriches task-specific local geometry modeling, and (2) a \textbf{Prompt-based Global Adaption} that dynamically modulates frozen backbone via instance-aware global semantics. These pathways are seamlessly integrated through a \textbf{Local-Global Fusion (LGF)} module that enables adaptive, bidirectional information exchange between local and global representations.
+As shown in Fig.~\ref{fig:overall2}, the core idea behind PLT is to decouple the fine-tuning process into two synergistic pathways: (1) a lightweight \textbf{Hierarchical Ladder Network (HLN)} that enriches task-specific local geometry modeling(\S\ref{sec:HLN}), and (2) a \textbf{Prompt-based Global Adaption} that dynamically modulates frozen backbone via instance-aware global semantics(\S\ref{sec:FT_backbone}). These pathways are seamlessly integrated through a \textbf{Local-Global Fusion (LGF)} module that enables adaptive, bidirectional information exchange between local and global representations(\S\ref{sec:LGF}).
 
-An overview of PLT is illustrated in Figure~\ref{fig:overall2}, comprising the following key components:
-\begin{itemize}
-    \item A \textbf{Hierarchical Ladder Network (HLN)} that introduces multi-resolution local branches that efficiently extracts fine-grained geometric features at varying spatial scales (\S\ref{sec:HLN});
-    \item A \textbf{Local-Global Fusion (LGF)} module that adaptively fuses complementary representations from HLN and the frozen backbone via selective attention (\S\ref{sec:LGF});
-    \item A \textbf{Dynamic Prompt Generator} that produces instance-specific prompt tokens to guide the global feature processing in frozen backbone (\S\ref{sec:FT_backbone});
-\end{itemize}
-
-Finally, we design task-specific decoding heads tailored to different downstream applications, as detailed in \S\ref{sec:head}. Furthermore, the hierarchical nature of our architecture enables progressive upsampling, which facilitates the recovery of the original point cloud resolution. This design choice proves especially effective for dense prediction tasks, where preserving spatial fidelity is crucial for accurate prediction.
+Finally, we design lightweight, task-specific heads, as detailed in \S\ref{sec:head}. Furthermore, we leverage the hierarchical structure to perform progressive upsampling, which facilitates the recovery of spatial resolution. This design choice proves especially effective for dense prediction tasks, where preserving spatial fidelity is crucial for accurate prediction.
 
 \subsection{Hierarchical Ladder Network}
 \label{sec:HLN}
-While transformer-based point cloud encoders excel at capturing global semantics, they often underperform on tasks that require precise local structure understanding due to the lack of inductive biases toward spatial neighborhoods. Although PointPEFT~\cite{tang2024point} introduces a Geometry-Aware Adapter to enhance local feature learning, it still relies heavily on the global intermediate activations of pre-trained models, limiting its ability to effectively capture intrinsic local features from the original point cloud. Furthermore, since most pre-trained models operate at a single resolution, they lack the multi-resolution information necessary for optimal performance in downstream tasks especially semantic segmentation.
 
-To address these limitations, we propose a Hierarchical Ladder Network (HLN) to capture local information across multiple scales within the input point cloud. The HLN module includes multiple layers designed to capture features at varying scales, and our experiments validate its effectiveness. The HLN layer consists of two key components: (1) Set Abstraction (SA) and (2) Local-Global Fusion (LGF) module. In this section, we introduce SA, with LGF discussed further in Sec.~\ref{sec:LGF}.
+While transformer-based point cloud encoders excel at capturing global semantics, they often struggle with fine-grained spatial understanding due to their limited inductive bias toward local geometric structures. Existing PEFT methods (e.g. PointPEFT~\cite{tang2024point}, PointGST~\cite{liang2024parameter}) attempt to address this by introducing locality-enhancing modules, but still rely heavily on global activations from frozen backbones and typically operate at fixed resolutions, underutilizing the rich local context essential for dense prediction.
+
+To address these limitations, we propose a Hierarchical Ladder Network (HLN) to capture local information across multiple resolutions within the input point cloud. By explicitly modeling multi-scale local features, HLN better aligns with the geometric nature of 3D data and improves performance on tasks such as semantic segmentation. The HLN layer consists of two key components: (1) Set Abstraction (SA) and (2) Local-Global Fusion (LGF) module. In this section, we introduce SA, with LGF discussed further in Sec.~\ref{sec:LGF}.
 
 Given an input point cloud $\mathbf{P} \in \mathbb{R}^{N \times 3}$, where $N$ is the number of points, we first apply point embedding to map $\mathbf{P}$ into a high-dimensional space, resulting in a initial point cloud features $\mathbf{F} \in \mathbb{R}^{N \times C}$, where $C$ represents the feature dimension. We then use Set Abstraction (SA) for downsampling, starting with farthest point sampling (FPS) to select a set of center points $\mathbf{C}=\{c_1, \ldots, c_n\}$, followed by k-Nearest Neighbors (kNN) to define local neighborhoods: 
 
@@ -36,13 +30,12 @@ The local features are aggregated as:
 \end{align}
 where $\varphi$, $\rho$ are learnable functions, $h_{\boldsymbol{\Theta}}$ denotes the aggregation function (e.g., max pooling) and $[\cdot ; \cdot]$ denotes concatenation. By stacking multiple SA layers, HLN constructs a hierarchical local representation $\mathbf{F}_l$ that complements global transformer outputs.
 
-Unlike previous PEFT methods (e.g., LST~\cite{sung2022lst}, PointGST~\cite{liang2024parameter}) that operate at fixed scales and often underutilize local spatial context, HLN enables fine-grained feature enrichment at multiple resolutions, explicitly tailored to 3D geometry.
-
 \subsection{Local-Global Fusion Module}
 \label{sec:LGF}
-A key challenge in point cloud representation learning lies in simultaneously capturing fine-grained geometric structures and maintaining high-level semantic awareness. Existing fusion approaches, such as naive concatenation or element-wise addition, typically fail to adaptively balance these two information sources, leading to suboptimal performance, particularly in dense prediction tasks.
 
-To address this issue, we propose a novel Local-Global Fusion (LGF) module that performs adaptive feature integration via selective attention. This design is motivated by two key insights: (1) local geometric features extracted by the HLN pathway are critical for precise spatial reasoning; and (2) global features from the frozen pre-trained backbone encode rich semantic priors that are highly beneficial for downstream tasks. LGF allows the network to dynamically balance and selectively integrate these complementary representations in a content-aware manner, ensuring that both local details and global semantics are effectively leveraged.
+A key challenge in point cloud representation learning is to effectively integrate fine-grained geometric details with high-level semantic context.. Existing fusion approaches, such as naive concatenation or element-wise addition, typically fail to adaptively balance these two information sources, leading to suboptimal performance, particularly in dense prediction tasks.
+
+To address this issue, we propose a novel Local-Global Fusion (LGF) module that performs adaptive feature integration via selective attention. Our design is motivated by two key insights: (1) local geometric features extracted by the HLN pathway are critical for precise spatial reasoning; and (2) global features from the frozen pre-trained backbone encode rich semantic priors. LGF allows the network to dynamically balance and selectively integrate these complementary representations in a content-aware manner, ensuring that both local details and global semantics are effectively leveraged.
 
 Let $\mathbf{F}_l$ and $\mathbf{F}_g$ denote local and global token features from HLN and the frozen backbone, respectively. we first map the backbone features to match the dimensionality of the HLN layer’s feature vectors using a learnable matrix $W$:
 
@@ -80,7 +73,7 @@ Finally, a lightweight MLP $\tau$ is applied to transform the fused features, an
 	\mathbf{F}_o = \mathbf{F}_l + \tau(\mathbf{F}_{ms})
 \end{equation}
 
-By dynamically balancing the contributions of local and global representations, the LGF module enables effective integration of fine-grained geometry and high-level semantics. This fusion is especially beneficial for dense prediction tasks, where both local detail and global structure are critical to performance.
+% By dynamically balancing the contributions of local and global representations, the LGF module enables effective integration of fine-grained geometry and high-level semantics. This fusion is especially beneficial for dense prediction tasks, where both local detail and global structure are critical to performance.
 
 \subsection{Dynamic Prompt-Based Tuning}
 \label{sec:FT_backbone}
