@@ -20,7 +20,7 @@ PLT introduces three key components:Hierarchical Ladder Network (HLN), Local-Glo
 
 \textbf{Local-Global Fusion (LGF)}: A fusion mechanism that integrates HLN's local features with frozen backbone's global representations at multiple scales. This bridges the gap between task-agnostic global knowledge and task-specific local patterns, enabling more effective and efficient adaptation.
 
-\textbf{Dynamic Prompt Generation}: Building upon the fused representations, PLT generates instance-specific, multi-scale prompts that dynamically modulate the frozen backbone's behavior. These adaptive prompts enhance the model's ability to produce task-relevant global features, leading to consistent performance improvements across diverse applications.
+\textbf{Dynamic Prompt Generation}: Building upon the fused representations, PLT generates instance-specific, multi-scale prompts that dynamically modulate the frozen backbone. These adaptive prompts enhance the model's ability to produce task-relevant global features, leading to consistent performance improvements across diverse applications.
 
 These modules work in synergy to achieve highly competitive performance while tuning only a small subset of parameters. Extensive experiments across multiple tasks and datasets demonstrate that PLT achieves state-of-the-art results among PEFT methods, with performance comparable to full fine-tuning while requiring significantly fewer tunable parameters.
 
