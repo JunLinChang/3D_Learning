@@ -14,7 +14,7 @@ To address these issues, Parameter-Efficient Fine-Tuning (PEFT) methods have eme
 
 In this work, we propose \textbf{Point Ladder Tuning (PLT)}, a novel PEFT framework specifically designed for point cloud learning. PLT is built upon the observation that (1) the early layers of point cloud encoders learn transferable low-level geometric priors, such as surface curvature and neighborhood topology, that are broadly applicable across tasks, and (2) task-specific adaptation primarily relies on refining localized structural features, rather than re-learning global representations that are already well-established during pre-training.
 
-PLT introduces three key components:Hierarchical Ladder Network (HLN), Local-Global Fusion (LGF), Dynamic Prompt Generation.
+PLT introduces three key components: Hierarchical Ladder Network (HLN), Local-Global Fusion (LGF), Dynamic Prompt Generation.
 
 \textbf{Hierarchical Ladder Network (HLN)}: A parallel branch that processes raw point clouds to extract multi-resolution local features. Through progressive downsampling, HLN preserves spatial granularity and semantic richness, offering detailed representations crucial for fine-grained tasks like segmentation.
 
