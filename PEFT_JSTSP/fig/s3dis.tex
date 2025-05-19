@@ -1,52 +1,107 @@
-\begin{figure}
+\begin{figure*}[htbp]
     \centering
-    \begin{subfigure}{0.235\textwidth}
+
+    % 第一行左侧的竖排标签
+    \begin{minipage}{0.09\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{fig/S3DIS/PointMAE.pdf}
-        % \caption*{\textbf{\#TP}:22.1M \textbf{\#OA}:85.18}
-        \caption{Full fine-tuning}
-        \label{fig:s3dis1}
-    \end{subfigure}
+        office\_9
+    \end{minipage}
     \hfill
-    \begin{subfigure}{0.235\textwidth}
+    % 第一行图片
+    \begin{minipage}{0.17\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{fig/S3DIS/DAPT.pdf}
-        % \caption*{\textbf{\#TP}:1.7M \textbf{\#OA}:84.94}
-        \caption{DAPT~\cite{zhou2024dynamic}}
-        \label{fig:s3dis2}
-    \end{subfigure}
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/office_9/DAPT_office_9.pdf}
+    \end{minipage}
     \hfill
-    \begin{subfigure}{0.235\textwidth}
+    \begin{minipage}{0.17\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{fig/S3DIS/IDPT.pdf}
-        % \caption*{\textbf{\#TP}:1.1M \textbf{\#OA}:85.08}
-        \caption{IDPT~\cite{zha2023instance}}
-        \label{fig:s3dis3}
-    \end{subfigure}
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/office_9/IDPT_office_9.pdf} % 替换为你的图片路径
+    \end{minipage}
     \hfill
-    \begin{subfigure}{0.235\textwidth}
+    \begin{minipage}{0.17\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{fig/S3DIS/PPT.pdf}
-        % \caption*{\textbf{\#TP}:1.1M \textbf{\#OA}:84.91}
-        \caption{PPT~\cite{zhang2024positional}}
-        \label{fig:s3dis4}
-    \end{subfigure}
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/office_9/PointGST_office_9.pdf}
+    \end{minipage}
     \hfill
-    \begin{subfigure}{0.235\textwidth}
+    \begin{minipage}{0.17\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{fig/S3DIS/PLT.pdf}
-        % \caption*{\textbf{\#TP}:0.8M \textbf{\#OA}:82.75}
-        \caption{PLT (Ours)}
-        \label{fig:s3dis5}
-    \end{subfigure}
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/office_9/PLT_office_9.pdf}
+    \end{minipage}
     \hfill
-    \begin{subfigure}{0.235\textwidth}
+    \begin{minipage}{0.17\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{fig/S3DIS/GT.pdf}
-        % \caption*{\textbf{\#TP}:0.6M \textbf{\#OA}:85.46}
-        \caption{GT}
-        \label{fig:s3dis6}
-    \end{subfigure}
-    \caption{The visualizations from the Area\_5\_office\_9 of S3DIS using a pre-trained PointMAE with various fine-tuning strategies.}
-    \label{fig:s3dis}
-\end{figure}
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/office_9/GT_office_9.pdf}
+    \end{minipage}
+    \hfill
+
+    \vspace{0.5em}
+
+    % 第一行左侧的竖排标签
+    \begin{minipage}{0.09\textwidth}
+        \centering
+        wc\_2
+    \end{minipage}
+    \hfill
+    % 第一行图片
+    \begin{minipage}{0.17\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/wc_2/DAPT_wc_2.pdf}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/wc_2/IDPT_wc_2.pdf} % 替换为你的图片路径
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/wc_2/PointGST_wc_2.pdf}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/wc_2/PLT_wc_2.pdf}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/supplement/semantic_segmentation/wc_2/GT_wc_2.pdf}
+    \end{minipage}
+    \hfill
+    
+    %下方的标签
+    \vspace{0.5em}
+    \begin{minipage}{0.09\textwidth} % 左侧空白区域
+        \color{white}{12}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth} % 第1列标题
+        \centering
+        DAPT
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth} % 第2列标题
+        \centering
+        IDPT
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth} % 第3列标题
+        \centering
+        PointGST
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth} % 第4列标题
+        \centering
+        PLT (Ours)
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.17\textwidth} % 第5列标题
+        \centering
+        GT
+    \end{minipage}
+    \hfill
+    \caption{The visualization of qualitative results for point cloud semantic segmentation on Area 5 of the S3DIS dataset~\cite{armeni20163d}. %We compare our PLT with previous methods on Area 5 of the S3DIS dataset~\cite{armeni20163d}.
+    }
+    \label{fig:s3dis_1}
+
+\end{figure*}
