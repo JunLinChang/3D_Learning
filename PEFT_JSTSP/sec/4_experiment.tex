@@ -119,14 +119,15 @@ The key to PLT's success lies in its Hierarchical Local Network (HLN), which exp
 
 \textbf{Fusion Strategy for Local and Global Information.} The integration strategy of local and global information plays a critical role in downstream performance. In Tab.~\ref{tab:fusion_way}, we evaluate several fusion mechanisms. The proposed Local-Global Fusion (LGF) with Softmax achieves the highest accuracy (85.53\%), outperforming additive, concatenative, and single-source approaches. Notably, leveraging only local features yields a considerably lower accuracy (82.86\%) than relying solely on global features (84.52\%), reflecting the benefits of pretrained global representation learning.
 
-\textbf{Attention Score of LGF}. To gain deeper insight into the behavior of LGF, we visualize the local attention weights $s_l$ across categories and network layers in Fig.~\ref{fig:attention_score}. The results reveal three key patterns:
+%\textbf{Attention Score of LGF}. To gain deeper insight into the behavior of LGF, we visualize the local attention weights $s_l$ across categories and network layers in Fig.~\ref{fig:attention_score}. The results reveal three key patterns:
+%
+%\begin{enumerate}
+%    \item The local attention scores are generally lower than 0.5, reaffirming the reliance on pretrained global priors.
+%    \item Category-specific variation is more pronounced in early layers and becomes increasingly uniform in deeper layers, suggesting a hierarchical fusion where shallow layers capture category-aware local details while deeper layers consolidate generalized global semantics.
+%    \item A downward trend in attention to local features from the first to third layers further supports the notion that the network progressively shifts focus from fine-grained local patterns to more abstract global concepts.
+%\end{enumerate}
 
-\begin{enumerate}
-    \item The local attention scores are generally lower than 0.5, reaffirming the reliance on pretrained global priors.
-    \item Category-specific variation is more pronounced in early layers and becomes increasingly uniform in deeper layers, suggesting a hierarchical fusion where shallow layers capture category-aware local details while deeper layers consolidate generalized global semantics.
-    \item A downward trend in attention to local features from the first to third layers further supports the notion that the network progressively shifts focus from fine-grained local patterns to more abstract global concepts.
-\end{enumerate}
-
+\textbf{Attention Score of LGF.} Fig.~\ref{fig:attention_score} visualizes local attention weights $s_l$ across categories and layers, revealing three key insights: (1) Scores remain below 0.5, confirming dependence on pretrained global priors; (2) Early layers show strong category-specific variation that diminishes in deeper layers, indicating hierarchical fusion from local details to global semantics; (3) The decreasing attention from first to third layers demonstrates the network's progressive shift from local patterns to abstract concepts.
 These findings collectively validate the design of PLT as a lightweight yet powerful PEFT framework for 3D transfer learning, wherein carefully balanced architectural and fusion strategies contribute to superior accuracy and efficiency.
 
 \input{tab/performance}
